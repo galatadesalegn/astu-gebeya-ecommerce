@@ -58,7 +58,7 @@ const Checkout = () => {
                 image: item.image,
                 price: item.price,
                 product: item._id,
-                seller: typeof item.seller === 'object' ? item.seller._id : item.seller,
+                seller: (item.seller && typeof item.seller === 'object') ? item.seller._id : item.seller,
             }));
 
             const { data } = await api.post('/api/orders', {

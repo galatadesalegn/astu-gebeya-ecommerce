@@ -129,7 +129,17 @@ const ProductDetail = () => {
                         className="flex flex-col h-full"
                     >
                         <div className="flex items-center justify-between mb-4">
-                            <span className="px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-black uppercase tracking-widest">In Stock</span>
+                            {product.stock > 0 ? (
+                                <span className="px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
+                                    In Stock ({product.stock})
+                                </span>
+                            ) : (
+                                <span className="px-4 py-1.5 bg-red-50 text-red-600 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 bg-red-500 rounded-full" />
+                                    Out of Stock
+                                </span>
+                            )}
                             <div className="flex items-center gap-1">
                                 <Star className="h-4 w-4 text-orange-500 fill-orange-500" />
                                 <span className="text-sm font-black text-slate-900">{product.rating}</span>
@@ -147,20 +157,22 @@ const ProductDetail = () => {
                         <div className="flex flex-col sm:flex-row gap-4 mb-8">
                             <button
                                 onClick={() => addToCart(product)}
-                                className="flex-1 bg-slate-100 text-slate-900 py-5 flex items-center justify-center gap-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-slate-200 transition-all active:scale-95 border border-[var(--border-color)]"
+                                disabled={product.stock <= 0}
+                                className={`flex-1 py-5 flex items-center justify-center gap-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all active:scale-95 border ${product.stock > 0 ? 'bg-slate-100 text-slate-900 hover:bg-slate-200 border-[var(--border-color)]' : 'bg-slate-50 text-slate-300 border-slate-100 cursor-not-allowed'}`}
                             >
                                 <ShoppingCart className="h-5 w-5" />
-                                Add to Bag
+                                {product.stock > 0 ? 'Add to Bag' : 'Sold Out'}
                             </button>
                             <button
                                 onClick={() => {
                                     addToCart(product);
                                     navigate('/checkout');
                                 }}
-                                className="flex-1 bg-orange-500 text-white py-5 flex items-center justify-center gap-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-orange-600 transition-all active:scale-95 shadow-xl shadow-orange-500/20"
+                                disabled={product.stock <= 0}
+                                className={`flex-1 py-5 flex items-center justify-center gap-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all active:scale-95 shadow-xl ${product.stock > 0 ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-orange-500/20' : 'bg-slate-200 text-slate-400 shadow-none cursor-not-allowed'}`}
                             >
                                 <Zap className="h-5 w-5" />
-                                Order Now
+                                {product.stock > 0 ? 'Order Now' : 'Not Available'}
                             </button>
                             <button
                                 onClick={handleInquiry}

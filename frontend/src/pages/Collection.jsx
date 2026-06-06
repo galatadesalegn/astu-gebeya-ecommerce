@@ -5,7 +5,7 @@ import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import {
     Search, Filter, ShoppingCart, Star, Sparkles, Zap, 
-    ShieldCheck, ChevronLeft, ChevronRight, Heart
+    ShieldCheck, ChevronLeft, ChevronRight, Heart, Lock
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
@@ -157,13 +157,28 @@ const Collection = () => {
                                     <Link to={`/product/${product._id}`} className="block w-full h-full">
                                         <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                                     </Link>
+                                    
+                                    {product.stock <= 0 && (
+                                        <div className="absolute top-4 right-4 z-10">
+                                            <span className="px-3 py-1 bg-red-500 text-white text-[10px] font-black uppercase rounded-full shadow-lg">Sold Out</span>
+                                        </div>
+                                    )}
+
                                     <div className="absolute inset-x-4 bottom-4 translate-y-24 group-hover:translate-y-0 transition-all duration-500 space-y-2">
-                                        <button onClick={() => addToCart(product)} className="w-full bg-slate-900 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4">
-                                            <ShoppingCart className="h-3 w-3" /> Add to Bag
-                                        </button>
-                                        <button onClick={() => { addToCart(product); navigate('/checkout'); }} className="w-full bg-orange-500 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4">
-                                            <Zap className="h-3 w-3" /> Order Now
-                                        </button>
+                                        {product.stock > 0 ? (
+                                            <>
+                                                <button onClick={() => addToCart(product)} className="w-full bg-slate-900 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4 hover:bg-black transition-colors">
+                                                    <ShoppingCart className="h-3 w-3" /> Add to Bag
+                                                </button>
+                                                <button onClick={() => { addToCart(product); navigate('/checkout'); }} className="w-full bg-orange-500 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4 hover:bg-orange-600 transition-colors">
+                                                    <Zap className="h-3 w-3" /> Order Now
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <button disabled className="w-full bg-slate-200 text-slate-400 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4 cursor-not-allowed">
+                                                <Lock className="h-3 w-3" /> Out of Stock
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="px-2">

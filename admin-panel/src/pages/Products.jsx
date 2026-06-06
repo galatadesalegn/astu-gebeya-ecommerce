@@ -12,12 +12,23 @@ import {
 } from 'lucide-react';
 import { AdminContext } from '../context/AdminContext';
 import { motion } from 'framer-motion';
+import Modal from '../components/Modal';
 
 const Products = () => {
     const { admin } = useContext(AdminContext);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
+
+    // Modal State
+    const [modalConfig, setModalConfig] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'warning',
+        onConfirm: () => {},
+        confirmText: 'Confirm'
+    });
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -40,19 +51,45 @@ const Products = () => {
             await api.put(`/api/admin/product/${productId}/status`, { status });
             setProducts(products.map(p => p._id === productId ? { ...p, status } : p));
         } catch (error) {
-            alert("Status update failed");
+            console.error("Status update error:", error);
+            setModalConfig({
+                isOpen: true,
+                title: "Update Failed",
+                message: "Unable to sync product status with the database.",
+                type: "danger",
+                isAlert: true,
+                confirmText: "Close",
+                onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
+            });
         }
     };
 
     const handleProductDelete = async (productId) => {
-        if (!window.confirm('Delete this product permanently?')) return;
-        try {
-            await api.delete(`/api/admin/product/${productId}`);
-            setProducts(products.filter(p => p._id !== productId));
-        } catch (error) {
-            console.error('Delete product error:', error);
-            alert('Product deletion failed');
-        }
+        setModalConfig({
+            isOpen: true,
+            title: "Inventory Removal",
+            message: "Are you sure you want to permanently remove this product from the marketplace?",
+            type: "danger",
+            confirmText: "Delete Forever",
+            onConfirm: async () => {
+                try {
+                    await api.delete(`/api/admin/product/${productId}`);
+                    setProducts(products.filter(p => p._id !== productId));
+                    setModalConfig(prev => ({ ...prev, isOpen: false }));
+                } catch (error) {
+                    console.error('Delete product error:', error);
+                    setModalConfig({
+                        isOpen: true,
+                        title: "Deletion Error",
+                        message: "The product could not be deleted at this time.",
+                        type: "danger",
+                        isAlert: true,
+                        confirmText: "Understood",
+                        onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
+                    });
+                }
+            }
+        });
     };
 
     const filteredProducts = products.filter(p => filter === 'all' || p.status === filter);
@@ -65,6 +102,10 @@ const Products = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-10"
         >
+            <Modal 
+                {...modalConfig}
+                onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+            />
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-4xl font-black text-[var(--text-main)] tracking-tighter uppercase leading-none">Product Registry</h2>

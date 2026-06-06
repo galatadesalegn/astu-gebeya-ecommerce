@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { AdminContext } from '../context/AdminContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import Modal from '../components/Modal';
 
 const Users = () => {
     const { admin } = useContext(AdminContext);
@@ -31,6 +32,16 @@ const Users = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [editData, setEditData] = useState({ name: '', email: '', role: '' });
+
+    // Modal State
+    const [modalConfig, setModalConfig] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'warning',
+        onConfirm: () => {},
+        confirmText: 'Confirm'
+    });
 
     const fetchUsers = async () => {
         try {
@@ -67,24 +78,62 @@ const Users = () => {
         }
     };
 
-    const handleToggleSuspend = async (userId) => {
-        if (!window.confirm("Are you sure you want to change this user's suspension status?")) return;
-        try {
-            const { data } = await api.put(`/api/admin/user/${userId}/suspend`);
-            setUsers(users.map(u => u._id === userId ? data : u));
-        } catch (error) {
-            alert("Suspension update failed");
-        }
+    const handleToggleSuspend = async (userId, isSuspended) => {
+        setModalConfig({
+            isOpen: true,
+            title: isSuspended ? "Reactivate User" : "Suspend User",
+            message: isSuspended 
+                ? "Are you sure you want to restore access for this user?" 
+                : "CRITICAL: This user will be immediately blocked from accessing the platform. Continue?",
+            type: isSuspended ? "info" : "warning",
+            confirmText: isSuspended ? "Restore Access" : "Suspend Immediately",
+            onConfirm: async () => {
+                try {
+                    await api.put(`/api/admin/user/${userId}/suspend`, { isSuspended: !isSuspended });
+                    setUsers(users.map(u => u._id === userId ? { ...u, isSuspended: !isSuspended } : u));
+                    setModalConfig(prev => ({ ...prev, isOpen: false }));
+                } catch (error) {
+                    console.error('Suspend error:', error);
+                    setModalConfig({
+                        isOpen: true,
+                        title: "Action Failed",
+                        message: "The system was unable to process this request. Please check your connection.",
+                        type: "danger",
+                        isAlert: true,
+                        confirmText: "Understood",
+                        onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
+                    });
+                }
+            }
+        });
     };
 
     const handleDeleteUser = async (userId) => {
-        if (!window.confirm("CRITICAL: Delete this user permanently? This action cannot be undone.")) return;
-        try {
-            await api.delete(`/api/admin/user/${userId}`);
-            setUsers(users.filter(u => u._id !== userId));
-        } catch (error) {
-            alert(error.response?.data?.message || "Delete failed");
-        }
+        setModalConfig({
+            isOpen: true,
+            title: "Permanent Deletion",
+            message: "CRITICAL: Delete this user permanently? This action cannot be undone and all associated data may be lost.",
+            type: "danger",
+            confirmText: "Delete Permanently",
+            onConfirm: async () => {
+                try {
+                    await api.delete(`/api/admin/user/${userId}`);
+                    setUsers(users.filter(u => u._id !== userId));
+                    setModalConfig(prev => ({ ...prev, isOpen: false }));
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    setModalConfig({
+                        isOpen: true,
+                        title: "Deletion Failed",
+                        message: "User could not be removed from the registry. Try again later.",
+                        type: "danger",
+                        isAlert: true,
+                        confirmText: "Understood",
+                        onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
+                    });
+                }
+            }
+        });
     };
 
     const handleEditSubmit = async (e) => {
@@ -125,8 +174,12 @@ const Users = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-10"
         >
+            <Modal 
+                {...modalConfig}
+                onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+            />
             {/* Header Section */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h2 className="text-4xl font-black text-[var(--text-main)] tracking-tighter uppercase leading-none">User Command</h2>
                     <p className="text-[var(--text-muted)] font-bold uppercase tracking-widest text-[10px] mt-2">Oversee directory, permissions, and status</p>
@@ -252,7 +305,7 @@ const Users = () => {
                                             <Edit3 size={18} />
                                         </button>
                                         <button
-                                            onClick={() => handleToggleSuspend(user._id)}
+                                            onClick={() => handleToggleSuspend(user._id, user.isSuspended)}
                                             className={`p-3 rounded-xl transition-all
                                                 ${user.isSuspended
                                                     ? 'bg-red-500 text-white shadow-lg shadow-red-500/20'
