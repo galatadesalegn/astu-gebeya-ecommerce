@@ -89,7 +89,7 @@ const Navbar = () => {
                             {/* Desktop Nav Links & User Actions */}
                             <div className="hidden lg:flex items-center space-x-12">
                                 <div className="flex items-center space-x-2">
-                                    <a href="/#products" className="px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-orange-500 hover:bg-orange-500/5 transition-all active:scale-95 leading-none">Collection</a>
+                                    <Link to="/collection" className="px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-orange-500 hover:bg-orange-500/5 transition-all active:scale-95 leading-none">Collection</Link>
                                     <a href="/#services" className="px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-orange-500 hover:bg-orange-500/5 transition-all active:scale-95 leading-none">Services</a>
                                     <a href="/#contact" className="px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-orange-500 hover:bg-orange-500/5 transition-all active:scale-95 leading-none">Connect</a>
                                 </div>
@@ -195,7 +195,7 @@ const Navbar = () => {
                 {isMenuOpen && (
                     <div className="lg:hidden bg-[var(--bg-card)] border-t border-[var(--border-color)] p-6 space-y-6 shadow-2xl relative z-10 animate-in slide-in-from-top duration-500">
                         <div className="grid grid-cols-1 gap-3">
-                            <a href="/#products" className="flex items-center justify-center p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl font-black text-[10px] uppercase tracking-widest text-[var(--text-main)] hover:bg-orange-500/5 hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(false)}>The Collection</a>
+                            <Link to="/collection" className="flex items-center justify-center p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl font-black text-[10px] uppercase tracking-widest text-[var(--text-main)] hover:bg-orange-500/5 hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(false)}>The Collection</Link>
                             <a href="/#services" className="flex items-center justify-center p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl font-black text-[10px] uppercase tracking-widest text-[var(--text-main)] hover:bg-orange-500/5 hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(false)}>Our Services</a>
                             <a href="/#contact" className="flex items-center justify-center p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl font-black text-[10px] uppercase tracking-widest text-[var(--text-main)] hover:bg-orange-500/5 hover:text-orange-500 transition-colors" onClick={() => setIsMenuOpen(false)}>Connect</a>
                         </div>

@@ -275,8 +275,8 @@ const Home = () => {
 
 
                         <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
-                            <a
-                                href="#products"
+                            <Link
+                                to="/collection"
                                 className="inline-flex items-center gap-2 rounded-xl font-bold text-sm text-white transition-all duration-200 hover:opacity-90 active:scale-95"
                                 style={{
                                     padding: '14px 32px',
@@ -286,9 +286,9 @@ const Home = () => {
                             >
                                 <ShoppingCart className="h-4 w-4" />
                                 Shop Now
-                            </a>
-                            <a
-                                href="#products"
+                            </Link>
+                            <Link
+                                to="/collection"
                                 className="inline-flex items-center gap-2 rounded-xl font-bold text-sm text-white transition-all duration-200 active:scale-95"
                                 style={{
                                     padding: '14px 32px',
@@ -299,154 +299,9 @@ const Home = () => {
                             >
                                 Browse Products
                                 <MoveRight className="h-4 w-4" />
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
-                </div>
-            </section>
-
-
-            <section className="py-20 min-h-screen flex flex-col justify-center bg-[var(--bg-card)] relative overflow-hidden group/products transition-all duration-500 section-perspective" id="products" onMouseMove={handleMouseMove}>
-
-
-                <motion.div style={{ y: parallaxY1 }} className="absolute inset-0 pointer-events-none z-0">
-                    <motion.div
-                        animate={{ rotateX: [0, 15, 0], rotateY: [0, -20, 0] }}
-                        transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
-                        className="hidden md:block absolute top-[10%] left-[5%] w-48 h-48 bg-gradient-to-br from-white/90 to-slate-100/30 rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white/80 backdrop-blur-md dark:hidden preserve-3d"
-                    />
-                </motion.div>
-
-                <motion.div style={{ y: parallaxY2 }} className="absolute inset-0 pointer-events-none z-0">
-                    <motion.div
-                        animate={{ rotateX: [0, -10, 0], rotateY: [0, 15, 0] }}
-                        transition={{ duration: 6, ease: "easeInOut", repeat: Infinity, delay: 1.5 }}
-                        className="hidden md:block absolute bottom-[15%] right-[3%] w-64 h-64 bg-gradient-to-tr from-white/80 to-blue-50/30 rounded-full shadow-[0_30px_60px_-15px_rgba(0,100,255,0.05)] border border-white/60 backdrop-blur-lg dark:hidden preserve-3d"
-                    />
-                </motion.div>
-
-
-                <motion.div
-                    className="pointer-events-none absolute -inset-px opacity-0 group-hover/products:opacity-100 transition-opacity duration-500 z-0"
-                    style={{
-                        background: useTransform(
-                            [springX, springY],
-                            ([x, y]) => `radial-gradient(1000px circle at ${x}px ${y}px, rgba(59, 130, 246, 0.08), transparent 80%)`
-                        )
-                    }}
-                />
-
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-                    <div className="flex flex-col lg:flex-row justify-between items-center mb-16 gap-8 bg-[var(--bg-card)] p-6 rounded-[30px] border border-[var(--border-color)]">
-                        <div className="flex flex-wrap items-center gap-4">
-                            {CATEGORIES.map((cat) => (
-                                <button
-                                    key={cat.name}
-                                    onClick={() => setActiveCategory(cat.name)}
-                                    className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${activeCategory === cat.name ? 'bg-slate-900 text-white shadow-xl' : 'bg-[var(--bg-main)] text-slate-500 hover:bg-slate-100'}`}
-                                >
-                                    {cat.name}
-                                </button>
-                            ))}
-                        </div>
-
-                        <div className="flex items-center gap-6 w-full lg:w-auto">
-                            <div className="relative flex-1 lg:w-64">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                                <input
-                                    type="text"
-                                    placeholder="Search ASTU GEBEYA..."
-                                    value={query || ''}
-                                    onChange={(e) => navigate(`/?search=${e.target.value}`)}
-                                    className="w-full pl-12 pr-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl outline-none focus:ring-2 focus:ring-orange-500/20 font-bold transition-all"
-                                />
-                            </div>
-                            <select
-                                value={sortBy}
-                                onChange={(e) => setSortBy(e.target.value)}
-                                className="px-6 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-xs font-black outline-none cursor-pointer"
-                            >
-                                <option value="newest">Latest</option>
-                                <option value="rating">Top Rated</option>
-                                <option value="price-low">Price: Low</option>
-                                <option value="price-high">Price: High</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-4">
-                        <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-main)] tracking-tight uppercase leading-none">
-                            Collection
-                        </h2>
-                        <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">
-                            Displaying 8 Featured Drops
-                        </p>
-                    </div>
-
-                    {filteredProducts.length === 0 ? (
-                        <div className="py-20 text-center bg-[var(--bg-card)] rounded-[40px] border-2 border-dashed border-[var(--border-color)]">
-                            <Search className="h-10 w-10 text-slate-200 mx-auto mb-4" />
-                            <h3 className="text-xl font-black text-[var(--text-main)] uppercase">Nothing detected</h3>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {filteredProducts.slice(0, 8).map((product, index) => (
-                                <motion.div
-                                    key={product._id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.05 }}
-                                    className="group"
-                                >
-                                    <div className="relative aspect-[3/4] rounded-[40px] overflow-hidden bg-[var(--bg-card)] mb-6 premium-shadow border border-[var(--border-color)] group-hover:border-orange-300/50 group-hover:shadow-orange-500/10 transition-all duration-300">
-                                        <Link to={`/product/${product._id}`} className="block w-full h-full">
-                                            <img
-                                                src={product.image}
-                                                alt={product.title}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                                            />
-                                        </Link>
-                                        <div className="absolute top-4 left-4">
-                                            <div className="bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg border border-white/40 flex items-center gap-1">
-                                                <Star className="h-3 w-3 text-orange-500 fill-orange-500" />
-                                                <span className="text-[10px] font-black text-slate-900">{product.rating}</span>
-                                            </div>
-                                        </div>
-                                        <div className="absolute inset-x-4 bottom-4 translate-y-24 group-hover:translate-y-0 transition-all duration-500 space-y-2">
-                                            <button
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    addToCart(product);
-                                                }}
-                                                className="w-full bg-slate-900 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4 shadow-2xl active:scale-95 transition-all hover:bg-slate-800"
-                                            >
-                                                <ShoppingCart className="h-3 w-3" />
-                                                Add to Bag
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    addToCart(product);
-                                                    navigate('/checkout');
-                                                }}
-                                                className="w-full bg-orange-500 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-4 shadow-2xl shadow-orange-500/20 active:scale-95 transition-all hover:bg-orange-600"
-                                            >
-                                                <Zap className="h-3 w-3" />
-                                                Order Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="px-2">
-                                        <div className="flex justify-between items-start mb-1">
-                                            <h3 className="text-lg font-black text-[var(--text-main)] uppercase tracking-tighter group-hover:text-orange-500 h-10 line-clamp-2 leading-tight">{product.title}</h3>
-                                            <p className="font-black text-[var(--text-main)]">{product.price} {product.currency || 'ETB'}</p>
-                                        </div>
-                                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">{product.category}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    )}
                 </div>
             </section>
 
