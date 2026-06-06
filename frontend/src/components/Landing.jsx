@@ -15,27 +15,27 @@ const Landing = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <span className="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-500 text-[10px] font-black uppercase tracking-widest mb-6 border border-orange-500/20">
+                            <span className="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-500 text-[10px] font-jakarta font-black uppercase tracking-widest mb-6 border border-orange-500/20">
                                 The Future of Local Trade
                             </span>
-                            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-6 uppercase text-[var(--text-main)]">
+                            <h1 className="text-4xl md:text-6xl font-syne font-bold tracking-tight leading-tight mb-6 uppercase text-[var(--text-main)]">
                                 Discover <br /> 
                                 <span className="text-orange-500 italic">Excellence.</span>
                             </h1>
-                            <p className="text-lg text-[var(--text-muted)] font-medium max-w-lg mb-10 leading-relaxed">
+                            <p className="text-lg text-[var(--text-muted)] font-jakarta font-medium max-w-lg mb-10 leading-relaxed">
                                 Join the premier ASTU GEBEYA community. A modern marketplace designed for seamless discovery, trusted transactions, and fast delivery.
                             </p>
                             <div className="flex flex-wrap gap-4">
                                 <Link 
                                     to="/register" 
-                                    className="px-8 py-4 bg-orange-500 text-white rounded-xl font-bold uppercase tracking-wider hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/20 active:scale-95 flex items-center gap-2 text-sm"
+                                    className="px-8 py-4 bg-orange-500 text-white rounded-xl font-jakarta font-bold uppercase tracking-wider hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/20 active:scale-95 flex items-center gap-2 text-sm"
                                 >
                                     Start Exploring
                                     <ArrowRight className="h-4 w-4" />
                                 </Link>
                                 <Link 
                                     to="/login" 
-                                    className="px-8 py-4 bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-main)] rounded-xl font-bold uppercase tracking-wider hover:bg-[var(--bg-main)] transition-all active:scale-95 text-sm"
+                                    className="px-8 py-4 bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-main)] rounded-xl font-jakarta font-bold uppercase tracking-wider hover:bg-[var(--bg-main)] transition-all active:scale-95 text-sm"
                                 >
                                     Log In
                                 </Link>
@@ -78,36 +78,40 @@ const Landing = () => {
             </section>
 
             {/* Features Section */}
-            <section className="py-20 bg-[var(--bg-section-alt)]">
-                <div className="max-w-7xl mx-auto px-6 text-center">
-                    <div className="grid md:grid-cols-3 gap-8">
+            <section className="py-24 bg-[var(--bg-section-alt)]">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid md:grid-cols-3 gap-10">
                         {[
                             {
-                                icon: <Zap className="h-6 w-6" />,
+                                icon: <Zap className="h-8 w-8" />,
                                 title: "Instant Access",
                                 desc: "Sign up in seconds and start browsing a curated selection of products."
                             },
                             {
-                                icon: <ShieldCheck className="h-6 w-6" />,
+                                icon: <ShieldCheck className="h-8 w-8" />,
                                 title: "Secure Trade",
                                 desc: "Verified sellers and protected payments ensure a worry-free experience."
                             },
                             {
-                                icon: <ShoppingBag className="h-6 w-6" />,
+                                icon: <ShoppingBag className="h-8 w-8" />,
                                 title: "Sell Anything",
                                 desc: "Convert your items into cash by reaching our growing network of buyers."
                             }
                         ].map((feature, i) => (
                             <motion.div 
                                 key={i}
-                                whileHover={{ y: -5 }}
-                                className="p-8 rounded-[32px] bg-[var(--bg-main)] border border-[var(--border-color)] shadow-sm hover:shadow-md transition-all group"
+                                whileHover={{ y: -8, scale: 1.02 }}
+                                className="p-12 rounded-[40px] bg-[var(--bg-main)] border border-[var(--border-color)] shadow-sm hover:shadow-xl transition-all group flex flex-col items-center text-center"
                             >
-                                <div className="h-12 w-12 bg-orange-500/10 text-orange-500 rounded-xl flex items-center justify-center mb-6 mx-auto group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                <div className="h-16 w-16 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300">
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-xl font-bold uppercase mb-3 text-[var(--text-main)]">{feature.title}</h3>
-                                <p className="text-sm text-[var(--text-muted)] font-medium leading-relaxed">{feature.desc}</p>
+                                <h3 className="text-2xl font-syne font-extrabold uppercase mb-4 tracking-tight text-[var(--text-main)]">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-base font-jakarta text-[var(--text-muted)] font-semibold leading-relaxed">
+                                    {feature.desc}
+                                </p>
                             </motion.div>
                         ))}
                     </div>
@@ -117,15 +121,15 @@ const Landing = () => {
             {/* CTA Section */}
             <section className="py-24">
                 <div className="max-w-3xl mx-auto px-6 text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-6 text-[var(--text-main)]">
+                    <h2 className="text-4xl md:text-5xl font-syne font-bold uppercase tracking-tight mb-6 text-[var(--text-main)]">
                         Ready to join the <span className="text-orange-500 italic">Atelier?</span>
                     </h2>
-                    <p className="text-lg text-[var(--text-muted)] font-medium mb-10">
+                    <p className="text-lg font-jakarta text-[var(--text-muted)] font-medium mb-10">
                         Create an account today and experience the best e-commerce platform in the region.
                     </p>
                     <Link 
                         to="/register" 
-                        className="inline-flex items-center gap-3 px-10 py-5 bg-orange-500 text-white rounded-2xl font-bold uppercase tracking-wider hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/30 active:scale-95 text-sm"
+                        className="inline-flex items-center gap-3 px-10 py-5 bg-orange-500 text-white rounded-2xl font-jakarta font-bold uppercase tracking-wider hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/30 active:scale-95 text-sm"
                     >
                         Create My Account
                         <Users className="h-5 w-5" />
