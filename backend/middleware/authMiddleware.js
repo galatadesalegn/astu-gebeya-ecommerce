@@ -22,6 +22,11 @@ export const protect = async (req, res, next) => {
                 return res.status(403).json({ message: 'Your account has been suspended. Contact support.' });
             }
 
+            // Optional: Block API access for unverified users globally
+            // if (!user.emailVerified) {
+            //     return res.status(403).json({ message: 'Please verify your email address.' });
+            // }
+
             req.user = user;
             return next();
         } catch (error) {

@@ -233,6 +233,15 @@ export const loginUser = async (req, res) => {
             await user.resetLoginAttempts();
         }
 
+        // ── Block Unverified Users ──
+        if (!user.emailVerified) {
+            return res.status(403).json({
+                message: 'Please verify your email address before logging in.',
+                emailVerified: false,
+                email: user.email // Helpful for frontend to redirect to OTP page
+            });
+        }
+
 
 
         res.json({

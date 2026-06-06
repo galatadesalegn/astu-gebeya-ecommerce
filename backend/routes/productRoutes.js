@@ -5,10 +5,10 @@ import { protect, sellerOnly, verifiedOnly } from '../middleware/authMiddleware.
 const router = express.Router();
 
 router.get('/', getProducts);
-router.post('/', protect, sellerOnly, createProduct);
-router.get('/seller/listings', protect, sellerOnly, getSellerProducts);
+router.post('/', protect, sellerOnly, verifiedOnly, createProduct);
+router.get('/seller/listings', protect, sellerOnly, verifiedOnly, getSellerProducts);
 router.get('/:id', getProductById);
-router.put('/:id', protect, sellerOnly, updateProduct);
-router.delete('/:id', protect, sellerOnly, deleteProduct);
+router.put('/:id', protect, sellerOnly, verifiedOnly, updateProduct);
+router.delete('/:id', protect, sellerOnly, verifiedOnly, deleteProduct);
 
 export default router;
