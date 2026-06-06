@@ -69,7 +69,7 @@ export const registerUser = async (req, res) => {
         sendEmail({
             to: user.email,
             subject: 'ASTU Gebeya - Your Verification Code',
-            templateParams: { otp }, // Pass otp explicitly for EmailJS
+            templateParams: { otp, name: sanitizedName }, // Pass otp and name
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
                     <h2 style="color: #1e293b; font-weight: 900; text-align: center;">Verify Your Email</h2>
@@ -167,7 +167,7 @@ export const resendVerification = async (req, res) => {
         sendEmail({
             to: user.email,
             subject: 'ASTU Gebeya - Your Verification Code',
-            templateParams: { otp }, // Pass otp explicitly for EmailJS
+            templateParams: { otp, name: user.name }, // Pass otp and name
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
                     <h2 style="color: #1e293b; font-weight: 900; text-align: center;">Verification Code</h2>
@@ -325,7 +325,7 @@ export const forgotPassword = async (req, res) => {
         sendEmail({
             to: user.email,
             subject: 'ASTU Gebeya - Password Recovery Code',
-            templateParams: { otp }, // Pass otp explicitly for EmailJS
+            templateParams: { otp, name: user.name }, // Pass otp and name
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
                     <h2 style="color: #1e293b; font-weight: 900; text-align: center;">Password Recovery</h2>

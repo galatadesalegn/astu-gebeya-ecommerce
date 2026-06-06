@@ -12,11 +12,16 @@ const sendEmail = async ({ to, subject, html, templateParams = {} }) => {
                 accessToken: process.env.EMAILJS_PRIVATE_KEY, // Use accessToken for Private Key in payload
                 template_params: {
                     to_email: to,
-                    email: to, // Added for compatibility
-                    recipient: to, // Added for compatibility
-                    to_name: to.split('@')[0],
+                    email: to,
+                    recipient: to,
+                    to_name: templateParams.name || to.split('@')[0],
+                    user_name: templateParams.name || to.split('@')[0],
                     subject,
-                    otp: templateParams.otp || '', // Map OTP specifically
+                    otp: templateParams.otp || '',
+                    passcode: templateParams.otp || '', // MATCHES YOUR TEMPLATE: {{passcode}}
+                    time: templateParams.time || '5 minutes', // MATCHES YOUR TEMPLATE: {{time}}
+                    code: templateParams.otp || '',
+                    verification_code: templateParams.otp || '',
                     message: html,
                     html_message: html,
                     ...templateParams,
