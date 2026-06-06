@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Plus, Package, DollarSign, List, Image as ImageIcon, X, LayoutDashboard, BarChart3, Settings, Edit, Trash2, TrendingUp, Calendar, Zap, ShoppingCart, MessageSquare, Eye, Phone, MapPin, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
 
 const SellerDashboard = () => {
     const { user } = useContext(AuthContext);
@@ -21,6 +22,16 @@ const SellerDashboard = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [toast, setToast] = useState(null);
     const [activityLog, setActivityLog] = useState([]);
+
+    // Modal state
+    const [modalConfig, setModalConfig] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'warning',
+        confirmText: 'Confirm',
+        onConfirm: () => { }
+    });
 
     const showToast = (message, type = 'success') => {
         setToast({ message, type });
@@ -176,19 +187,50 @@ const SellerDashboard = () => {
         }
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm('Are you certain?')) {
-            try {
-                await api.delete(`/api/products/${id}`);
-                setListings(listings.filter(item => item._id !== id));
-            } catch (error) {
-                console.error("Delete failed", error);
+    const handleDelete = (id) => {
+        setModalConfig({
+            isOpen: true,
+            title: "Delete Listing",
+            message: "Are you sure you want to permanently remove this item from your boutique? This action cannot be undone.",
+            type: "danger",
+            confirmText: "Delete Item",
+            onConfirm: async () => {
+                try {
+                    await api.delete(`/api/products/${id}`);
+                    setListings(listings.filter(item => item._id !== id));
+                    showToast("Listing deleted successfully");
+                } catch (error) {
+                    console.error("Delete failed", error);
+                    showToast("Failed to delete listing", "error");
+                } finally {
+                    setModalConfig(prev => ({ ...prev, isOpen: false }));
+                }
             }
-        }
+        });
+    };
+
+    const handleConfirmDelivery = (orderId) => {
+        setModalConfig({
+            isOpen: true,
+            title: "Confirm Delivery",
+            message: "Are you sure this order has been successfully delivered to the buyer? This will finalize the transaction.",
+            type: "success",
+            confirmText: "Yes, Delivered",
+            onConfirm: () => handleMarkDelivered(orderId)
+        });
     };
 
     return (
         <div className="bg-[var(--bg-main)] min-h-screen transition-colors duration-500 relative">
+            <Modal 
+                isOpen={modalConfig.isOpen}
+                onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={modalConfig.onConfirm}
+                title={modalConfig.title}
+                message={modalConfig.message}
+                type={modalConfig.type}
+                confirmText={modalConfig.confirmText}
+            />
             <AnimatePresence>
                 {toast && (
                     <motion.div
@@ -601,7 +643,7 @@ const SellerDashboard = () => {
                                         Message Buyer
                                     </button>
                                     <button
-                                        onClick={() => handleMarkDelivered(selectedOrder._id)}
+                                        onClick={() => { handleConfirmDelivery(selectedOrder._id); setSelectedOrder(null); }}
                                         className="flex-1 bg-orange-500 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/20 active:scale-95"
                                     >
                                         <Zap className="h-5 w-5" />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { 
@@ -14,11 +14,19 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import Modal from '../components/Modal';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, cartTotal, cartCount } = useContext(CartContext);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    // Modal state
+    const [modalConfig, setModalConfig] = useState({
+        isOpen: false,
+        itemId: null,
+        itemTitle: ''
+    });
 
     useEffect(() => {
         if (!user) {
@@ -26,8 +34,32 @@ const Cart = () => {
         }
     }, [user, navigate]);
 
+    const handleRemoveRequest = (id, title) => {
+        setModalConfig({
+            isOpen: true,
+            itemId: id,
+            itemTitle: title
+        });
+    };
+
+    const confirmRemove = () => {
+        if (modalConfig.itemId) {
+            removeFromCart(modalConfig.itemId);
+            setModalConfig({ isOpen: false, itemId: null, itemTitle: '' });
+        }
+    };
+
     return (
         <div className="bg-[var(--bg-main)] min-h-screen pt-32 pb-32 transition-colors duration-500">
+            <Modal 
+                isOpen={modalConfig.isOpen}
+                onClose={() => setModalConfig({ isOpen: false, itemId: null, itemTitle: '' })}
+                onConfirm={confirmRemove}
+                title="Remove from Bag"
+                message={`Are you sure you want to remove "${modalConfig.itemTitle}" from your shopping bag?`}
+                type="danger"
+                confirmText="Remove Item"
+            />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Link to="/" className="inline-flex items-center space-x-2 text-[var(--text-muted)] hover:text-orange-500 transition mb-12 group">
                     <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
@@ -89,7 +121,7 @@ const Cart = () => {
                                                 </button>
                                             </div>
                                             <button
-                                                onClick={() => removeFromCart(item._id)}
+                                                onClick={() => handleRemoveRequest(item._id, item.title)}
                                                 className="text-[var(--text-muted)] hover:text-red-500 font-black text-[10px] uppercase tracking-widest transition flex items-center gap-1"
                                             >
                                                 <Trash2 className="h-3.5 w-3.5" />
