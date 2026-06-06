@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { Star, ShieldCheck, Truck, Headphones, ShoppingCart, ArrowLeft, MessageSquare, ChevronRight, Zap, Phone, Link as LinkIcon, Lock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
 
 const ProductDetail = () => {
