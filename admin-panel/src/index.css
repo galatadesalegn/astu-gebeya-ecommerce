@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+:root {
+    --color-accent: #f97316;
+    --bg-main: #F8F9FA;
+    --bg-card: #FFFFFF;
+    --bg-section: #FFFFFF;
+    --bg-section-alt: #F3F4F6;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --border-color: rgba(0, 0, 0, 0.05);
+
+    /* Role Colors - Light Mode */
+    --role-super-admin: #7C3AED;
+    /* Indigo/Purple */
+    --role-editor: #059669;
+    /* Emerald */
+    --role-viewer: #4B5563;
+    /* Gray/Slate */
+    --role-bg-opacity: 0.1;
+}
+
+.dark {
+    --bg-main: #0B0F19;
+    --bg-card: #151B28;
+    --bg-section: #151B28;
+    --bg-section-alt: #1E293B;
+    --text-main: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --border-color: rgba(255, 255, 255, 0.08);
+
+    /* Role Colors - Dark Mode */
+    --role-super-admin: #A78BFA;
+    /* Lighter Purple */
+    --role-editor: #34D399;
+    /* Lighter Emerald */
+    --role-viewer: #94A3B8;
+    /* Lighter Gray */
+    --role-bg-opacity: 0.2;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@layer components {
+    .admin-card {
+        background-color: var(--bg-card);
+        border-radius: 1.5rem;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .admin-card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-color: var(--color-accent);
+    }
+
+    .input {
+        background-color: var(--bg-section-alt);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        color: var(--text-main);
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .input:focus {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+    }
+
+    .input-highlight {
+        background-color: var(--bg-section-alt);
+        border: 2px solid var(--color-accent);
+        border-radius: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        color: var(--text-main);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Dark mode overrides for inputs */
+    .dark .input {
+        background-color: var(--bg-section);
+        border-color: var(--border-color);
+    }
+
+    .dark .input-highlight {
+        background-color: var(--bg-section);
+        border-color: var(--color-accent);
+        color: var(--text-main);
+    }
+
+    /* Role Badges */
+    .role-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+
+    .role-super-admin {
+        background-color: color-mix(in srgb, var(--role-super-admin), transparent 85%);
+        color: var(--role-super-admin);
+        border: 1px solid color-mix(in srgb, var(--role-super-admin), transparent 70%);
+    }
+
+    .role-editor {
+        background-color: color-mix(in srgb, var(--role-editor), transparent 85%);
+        color: var(--role-editor);
+        border: 1px solid color-mix(in srgb, var(--role-editor), transparent 70%);
+    }
+
+    .role-viewer {
+        background-color: color-mix(in srgb, var(--role-viewer), transparent 85%);
+        color: var(--role-viewer);
+        border: 1px solid color-mix(in srgb, var(--role-viewer), transparent 70%);
+    }
+
+    .btn-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+        transform: scale(0.95);
+    }
+}
