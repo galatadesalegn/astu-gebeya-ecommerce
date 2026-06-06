@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import {
     Search,
     Filter,
@@ -22,9 +22,7 @@ const Products = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/products`, {
-                    headers: { Authorization: `Bearer ${admin.token}` }
-                });
+                const { data } = await api.get('/api/admin/products');
                 setProducts(data.products || []);
             } catch (error) {
                 console.error("Products fetch error:", error);
@@ -32,14 +30,14 @@ const Products = () => {
                 setLoading(false);
             }
         };
-        fetchProducts();
-    }, [admin.token]);
+        if (admin?.token) {
+            fetchProducts();
+        }
+    }, [admin?.token]);
 
     const handleStatusUpdate = async (productId, status) => {
         try {
-            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/product/${productId}/status`, { status }, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            await api.put(`/api/admin/product/${productId}/status`, { status });
             setProducts(products.map(p => p._id === productId ? { ...p, status } : p));
         } catch (error) {
             alert("Status update failed");
@@ -49,9 +47,7 @@ const Products = () => {
     const handleProductDelete = async (productId) => {
         if (!window.confirm('Delete this product permanently?')) return;
         try {
-            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/admin/product/${productId}`, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            await api.delete(`/api/admin/product/${productId}`);
             setProducts(products.filter(p => p._id !== productId));
         } catch (error) {
             console.error('Delete product error:', error);

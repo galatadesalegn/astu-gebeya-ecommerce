@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import {
     Search,
     Filter,
@@ -34,9 +34,7 @@ const Users = () => {
 
     const fetchUsers = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/users`, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            const { data } = await api.get('/api/admin/users');
             setUsers(data.users || []);
         } catch (error) {
             console.error("Users fetch error:", error);
@@ -46,14 +44,14 @@ const Users = () => {
     };
 
     useEffect(() => {
-        fetchUsers();
-    }, [admin.token]);
+        if (admin?.token) {
+            fetchUsers();
+        }
+    }, [admin?.token]);
 
     const handleRoleUpdate = async (userId, newRole) => {
         try {
-            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/user/${userId}`, { role: newRole }, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            await api.put(`/api/admin/user/${userId}`, { role: newRole });
             setUsers(users.map(u => u._id === userId ? { ...u, role: newRole } : u));
         } catch (error) {
             alert("Update failed");
@@ -62,9 +60,7 @@ const Users = () => {
 
     const handleToggleVerify = async (userId) => {
         try {
-            const { data } = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/user/${userId}/verify`, {}, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            const { data } = await api.put(`/api/admin/user/${userId}/verify`);
             setUsers(users.map(u => u._id === userId ? data : u));
         } catch (error) {
             alert("Verification update failed");
@@ -74,9 +70,7 @@ const Users = () => {
     const handleToggleSuspend = async (userId) => {
         if (!window.confirm("Are you sure you want to change this user's suspension status?")) return;
         try {
-            const { data } = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/user/${userId}/suspend`, {}, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            const { data } = await api.put(`/api/admin/user/${userId}/suspend`);
             setUsers(users.map(u => u._id === userId ? data : u));
         } catch (error) {
             alert("Suspension update failed");
@@ -86,9 +80,7 @@ const Users = () => {
     const handleDeleteUser = async (userId) => {
         if (!window.confirm("CRITICAL: Delete this user permanently? This action cannot be undone.")) return;
         try {
-            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/admin/user/${userId}`, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            await api.delete(`/api/admin/user/${userId}`);
             setUsers(users.filter(u => u._id !== userId));
         } catch (error) {
             alert(error.response?.data?.message || "Delete failed");
