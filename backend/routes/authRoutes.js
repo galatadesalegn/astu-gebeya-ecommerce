@@ -9,7 +9,7 @@ import {
     verifyResetOTP,
     resetPassword,
 } from '../controllers/authController.js';
-import { authLimiter, passwordResetLimiter } from '../middleware/rateLimiter.js';
+import { authLimiter, passwordResetLimiter, verificationResendLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ const router = express.Router();
 router.post('/register', authLimiter, registerUser);
 router.post('/login', authLimiter, loginUser);
 router.post('/verify-otp', authLimiter, verifyOTP);
-router.post('/resend-verification', authLimiter, resendVerification);
+router.post('/resend-verification', verificationResendLimiter, resendVerification);
 router.post('/refresh-token', refreshToken);
 router.post('/forgot-password', passwordResetLimiter, forgotPassword);
 router.post('/verify-reset-otp', passwordResetLimiter, verifyResetOTP);

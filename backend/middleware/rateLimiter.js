@@ -38,9 +38,9 @@ export const orderLimiter = rateLimit({
 
 // Limiter for verification resend
 export const verificationResendLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour
-    max: 5, // 5 attempts per hour
-    message: { message: 'Too many verification requests. Please try again in an hour.' },
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // 5 attempts per 15 mins
+    message: { message: 'Too many verification requests. Please try again in 15 minutes.' },
     standardHeaders: true,
     legacyHeaders: false,
 });
