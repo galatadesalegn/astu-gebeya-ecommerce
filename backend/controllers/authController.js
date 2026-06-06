@@ -63,13 +63,14 @@ export const registerUser = async (req, res) => {
 
         // ── Generate OTP ──
         const otp = user.generateOTP();
+        const expirationTime = new Date(Date.now() + 10 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         await user.save({ validateBeforeSave: false });
 
         // ── Send OTP email asynchronously (don't block registration) ──
         sendEmail({
             to: user.email,
             subject: 'ASTU Gebeya - Your Verification Code',
-            templateParams: { otp, name: sanitizedName }, // Pass otp and name
+            templateParams: { otp, name: sanitizedName, time: expirationTime }, // Pass otp, name, and time
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
                     <h2 style="color: #1e293b; font-weight: 900; text-align: center;">Verify Your Email</h2>
@@ -162,12 +163,13 @@ export const resendVerification = async (req, res) => {
         }
 
         const otp = user.generateOTP();
+        const expirationTime = new Date(Date.now() + 10 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         await user.save({ validateBeforeSave: false });
 
         sendEmail({
             to: user.email,
             subject: 'ASTU Gebeya - Your Verification Code',
-            templateParams: { otp, name: user.name }, // Pass otp and name
+            templateParams: { otp, name: user.name, time: expirationTime }, // Pass otp, name, and time
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
                     <h2 style="color: #1e293b; font-weight: 900; text-align: center;">Verification Code</h2>
@@ -319,13 +321,14 @@ export const forgotPassword = async (req, res) => {
         }
 
         const otp = user.generateResetOTP();
+        const expirationTime = new Date(Date.now() + 10 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         await user.save({ validateBeforeSave: false });
 
         // send recovery email asynchronously
         sendEmail({
             to: user.email,
             subject: 'ASTU Gebeya - Password Recovery Code',
-            templateParams: { otp, name: user.name }, // Pass otp and name
+            templateParams: { otp, name: user.name, time: expirationTime }, // Pass otp, name, and time
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
                     <h2 style="color: #1e293b; font-weight: 900; text-align: center;">Password Recovery</h2>
