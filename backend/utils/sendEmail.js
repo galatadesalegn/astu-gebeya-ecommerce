@@ -9,6 +9,7 @@ const sendEmail = async ({ to, subject, html, templateParams = {} }) => {
                 service_id: process.env.EMAILJS_SERVICE_ID,
                 template_id: process.env.EMAILJS_TEMPLATE_ID,
                 user_id: process.env.EMAILJS_PUBLIC_KEY,
+                accessToken: process.env.EMAILJS_PRIVATE_KEY, // Use accessToken for Private Key in payload
                 template_params: {
                     to_email: to,
                     subject,
@@ -18,13 +19,8 @@ const sendEmail = async ({ to, subject, html, templateParams = {} }) => {
             };
 
             const headers = { 'Content-Type': 'application/json' };
-            // If a private key is provided, send it as a Bearer token for server-side auth
-            if (process.env.EMAILJS_PRIVATE_KEY) {
-                headers['Authorization'] = `Bearer ${process.env.EMAILJS_PRIVATE_KEY}`;
-            } else if (process.env.EMAILJS_PUBLIC_KEY) {
-                // legacy: include user_id in payload when public key is provided
-                payload.user_id = process.env.EMAILJS_PUBLIC_KEY;
-            }
+            // Note: The Private Key is passed as 'accessToken' inside the payload for server-side calls, 
+            // rather than in the Authorization header for the public REST API.
 
             const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
                 method: 'POST',
