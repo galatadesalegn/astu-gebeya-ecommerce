@@ -35,7 +35,20 @@ const Login = () => {
             }
         } catch (error) {
             console.error('Login error:', error);
-            setErrorMsg(error.response?.data?.message || 'Login failed. Please check your credentials.');
+            const message = error.response?.data?.message || 'Login failed. Please check your credentials.';
+            setErrorMsg(message);
+            
+            // Handle unverified user redirect
+            if (error.response?.status === 403 && error.response?.data?.emailVerified === false) {
+                setTimeout(() => {
+                    navigate('/register', { 
+                        state: { 
+                            email: email, 
+                            triggerOTP: true 
+                        } 
+                    });
+                }, 1500);
+            }
         } finally {
             setIsLoading(false);
         }
