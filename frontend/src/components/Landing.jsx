@@ -188,7 +188,7 @@ const Landing = () => {
             </section>
 
             {/* Services Section */}
-            <section className="py-24 bg-[var(--bg-card)] dark:bg-black relative overflow-hidden group/services transition-colors duration-500" id="services" onMouseMove={handleMouseMove}>
+            <section className="py-24 bg-[var(--bg-card)] dark:bg-[var(--bg-main)] relative overflow-hidden group/services transition-colors duration-500" id="services" onMouseMove={handleMouseMove}>
                 <motion.div style={{ y: parallaxY3 }} className="absolute inset-0 pointer-events-none z-0">
                     <div className="hidden lg:block absolute top-[20%] right-[10%] w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl" />
                 </motion.div>
@@ -225,7 +225,7 @@ const Landing = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -10 }}
-                                className="p-16 rounded-[50px] bg-[var(--bg-main)] dark:bg-zinc-950 border border-[var(--border-color)] hover:shadow-2xl hover:shadow-indigo-500/10 transition-all text-center flex flex-col items-center"
+                                className="p-16 rounded-[50px] bg-[var(--bg-main)] dark:bg-[var(--bg-card)] border border-[var(--border-color)] dark:border-white/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all text-center flex flex-col items-center"
                             >
                                 <div className="h-24 w-24 bg-[#4f46e5] text-white rounded-[32px] flex items-center justify-center mb-10 shadow-xl shadow-indigo-500/20">
                                     {service.icon}
@@ -239,7 +239,7 @@ const Landing = () => {
             </section>
 
             {/* Inquiry Section */}
-            <section className="py-24 bg-[var(--bg-main)] dark:bg-black transition-colors duration-500" id="contact">
+            <section className="py-24 bg-[var(--bg-main)] dark:bg-[var(--bg-main)] transition-colors duration-500" id="contact">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <div>
@@ -249,7 +249,7 @@ const Landing = () => {
                             </h2>
                             <div className="space-y-8">
                                 <div className="flex items-center gap-6">
-                                    <div className="h-14 w-14 bg-[var(--bg-card)] dark:bg-zinc-900 rounded-2xl flex items-center justify-center shadow-sm border border-[var(--border-color)]">
+                                    <div className="h-14 w-14 bg-[var(--bg-card)] dark:bg-[var(--bg-card)] rounded-2xl flex items-center justify-center shadow-sm border border-[var(--border-color)] dark:border-white/5">
                                         <Mail className="h-6 w-6 text-[#4f46e5]" />
                                     </div>
                                     <div>
@@ -258,7 +258,7 @@ const Landing = () => {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-6">
-                                    <div className="h-14 w-14 bg-[var(--bg-card)] dark:bg-zinc-900 rounded-2xl flex items-center justify-center shadow-sm border border-[var(--border-color)]">
+                                    <div className="h-14 w-14 bg-[var(--bg-card)] dark:bg-[var(--bg-card)] rounded-2xl flex items-center justify-center shadow-sm border border-[var(--border-color)] dark:border-white/5">
                                         <Headphones className="h-6 w-6 text-[#4f46e5]" />
                                     </div>
                                     <div>
@@ -272,13 +272,13 @@ const Landing = () => {
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            className="bg-[var(--bg-card)] dark:bg-zinc-950 p-12 rounded-[50px] shadow-2xl border border-[var(--border-color)]"
+                            className="bg-[var(--bg-card)] dark:bg-[var(--bg-card)] p-12 rounded-[50px] shadow-2xl border border-[var(--border-color)] dark:border-white/5"
                         >
                             <h3 className="text-3xl font-syne font-bold mb-8 text-[var(--text-main)] uppercase tracking-tighter">Inquiry</h3>
                             <form className="space-y-6">
-                                <input type="text" placeholder="Identification" className="w-full bg-[var(--bg-main)] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
-                                <input type="email" placeholder="Communication Channel" className="w-full bg-[var(--bg-main)] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
-                                <textarea rows="4" placeholder="What is your story?" className="w-full bg-[var(--bg-main)] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] resize-none placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required></textarea>
+                                <input type="text" placeholder="Identification" className="w-full bg-[var(--bg-main)] dark:bg-[var(--bg-main)] border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
+                                <input type="email" placeholder="Communication Channel" className="w-full bg-[var(--bg-main)] dark:bg-[var(--bg-main)] border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
+                                <textarea rows="4" placeholder="What is your story?" className="w-full bg-[var(--bg-main)] dark:bg-[var(--bg-main)] border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] resize-none placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required></textarea>
                                 <button type="submit" className="w-full bg-[#4f46e5] text-white py-5 rounded-2xl font-jakarta font-bold uppercase tracking-widest hover:bg-[#4338ca] transition-all shadow-xl shadow-indigo-500/20 active:scale-95">
                                     Send Message
                                 </button>
@@ -289,7 +289,7 @@ const Landing = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-24 bg-[var(--bg-card)] dark:bg-black transition-colors duration-500">
+            <section className="py-24 bg-[var(--bg-card)] dark:bg-[var(--bg-main)] transition-colors duration-500">
                 <div className="max-w-3xl mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-syne font-bold uppercase tracking-tight mb-6 text-[var(--text-main)]">
                         Ready to join the <span className="text-[#4f46e5] italic">Atelier?</span>

@@ -21,12 +21,22 @@ const Checkout = () => {
     };
 
     const [shippingAddress, setShippingAddress] = useState({
-        name: user?.name || '',
-        email: user?.email || '',
+        name: '',
+        email: '',
         phone: '',
         dormBlock: '',
         roomNumber: ''
     });
+
+    useEffect(() => {
+        if (user) {
+            setShippingAddress(prev => ({
+                ...prev,
+                name: user.name || '',
+                email: user.email || '',
+            }));
+        }
+    }, [user]);
     const [paymentMethod, setPaymentMethod] = useState('Peer to Peer (Hand-to-Hand)');
 
     if (!user) {
@@ -48,7 +58,7 @@ const Checkout = () => {
                 image: item.image,
                 price: item.price,
                 product: item._id,
-                seller: item.seller,
+                seller: typeof item.seller === 'object' ? item.seller._id : item.seller,
             }));
 
             const { data } = await api.post('/api/orders', {
@@ -64,7 +74,8 @@ const Checkout = () => {
             setStep(3);
         } catch (error) {
             console.error(error);
-            showToast("Failed to place order.", "error");
+            const message = error.response?.data?.message || "Failed to place order.";
+            showToast(message, "error");
         } finally {
             setLoading(false);
         }
