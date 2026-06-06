@@ -34,8 +34,8 @@ const Login = () => {
                 navigate('/');
             }
         } catch (error) {
-            console.error('Login error:', error);
-            const message = error.response?.data?.message || 'Login failed. Please check your credentials.';
+            console.error('Login error details:', error.response || error);
+            const message = error.response?.data?.message || error.message || 'Login failed. Please check your credentials.';
             setErrorMsg(message);
             
             // Handle unverified user redirect

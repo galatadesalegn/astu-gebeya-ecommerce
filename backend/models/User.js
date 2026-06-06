@@ -113,10 +113,15 @@ userSchema.index({ resetPasswordToken: 1 });
 userSchema.index({ resetPasswordOTP: 1 });
 
 // Hash password before saving
-userSchema.pre('save', async function () {
-    if (!this.isModified('password')) return;
-    const rounds = parseInt(process.env.BCRYPT_ROUNDS || '10', 10);
-    this.password = await bcrypt.hash(this.password, rounds);
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    try {
+        const rounds = parseInt(process.env.BCRYPT_ROUNDS || '10', 10);
+        this.password = await bcrypt.hash(this.password, rounds);
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Match password method

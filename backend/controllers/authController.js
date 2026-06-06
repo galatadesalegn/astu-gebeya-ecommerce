@@ -203,12 +203,14 @@ export const loginUser = async (req, res) => {
         const user = await User.findOne({ email: email.toLowerCase().trim() }).select('+password');
 
         if (!user) {
+            console.log(`Login failed: User not found for email ${email}`);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
         // ── Check account lock ──
         if (user.isLocked()) {
             const lockMinutes = Math.ceil((user.lockUntil - Date.now()) / 60000);
+            console.log(`Login failed: Account locked for ${email}`);
             return res.status(423).json({
                 message: `Account temporarily locked due to too many failed attempts. Try again in ${lockMinutes} minute(s).`,
             });
@@ -216,15 +218,18 @@ export const loginUser = async (req, res) => {
 
         // ── Check banned/suspended ──
         if (user.isBanned) {
+            console.log(`Login failed: Account banned for ${email}`);
             return res.status(403).json({ message: 'Your account has been banned. Contact support.' });
         }
         if (user.isSuspended) {
+            console.log(`Login failed: Account suspended for ${email}`);
             return res.status(403).json({ message: 'Your account has been suspended. Contact support.' });
         }
 
         // ── Verify password ──
         const isMatch = await user.matchPassword(password);
         if (!isMatch) {
+            console.log(`Login failed: Password mismatch for ${email}`);
             await user.incrementLoginAttempts();
             const remaining = Math.max(0, 5 - (user.loginAttempts + 1));
             return res.status(401).json({
