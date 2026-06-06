@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { UserPlus, Edit, Trash2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../services/api';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Settings = () => {
@@ -24,9 +24,7 @@ const Settings = () => {
 
     const fetchStaff = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/staff`, {
-                headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('adminInfo')).token}` },
-            });
+            const { data } = await api.get('/api/admin/staff');
             setStaff(data);
         } catch (error) {
             toast.error(error.response?.data?.message || 'Failed to load staff');
@@ -36,11 +34,7 @@ const Settings = () => {
     const handleEmailUpdate = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(
-                `${import.meta.env.VITE_BACKEND_URL}/api/admin/account/email`,
-                { email: newEmail },
-                { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('adminInfo')).token}` } }
-            );
+            await api.put('/api/admin/account/email', { email: newEmail });
             toast.success('Email updated');
             setAdminInfo((prev) => ({ ...prev, email: newEmail }));
             setNewEmail('');
@@ -52,11 +46,7 @@ const Settings = () => {
     const handlePasswordUpdate = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(
-                `${import.meta.env.VITE_BACKEND_URL}/api/admin/account/password`,
-                { oldPassword, newPassword },
-                { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('adminInfo')).token}` } }
-            );
+            await api.put('/api/admin/account/password', { oldPassword, newPassword });
             toast.success('Password updated');
             setOldPassword('');
             setNewPassword('');
@@ -68,11 +58,7 @@ const Settings = () => {
     const handleInvite = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/admin/staff`,
-                inviteData,
-                { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('adminInfo')).token}` } }
-            );
+            await api.post('/api/admin/staff', inviteData);
             toast.success('Staff invited');
             setInviteData({ name: '', email: '', password: '', adminRole: 'Viewer' });
             fetchStaff();
@@ -83,11 +69,7 @@ const Settings = () => {
 
     const handleRoleChange = async (id, role) => {
         try {
-            await axios.put(
-                `${import.meta.env.VITE_BACKEND_URL}/api/admin/staff/${id}/role`,
-                { adminRole: role },
-                { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('adminInfo')).token}` } }
-            );
+            await api.put(`/api/admin/staff/${id}/role`, { adminRole: role });
             toast.success('Role updated');
             fetchStaff();
         } catch (err) {

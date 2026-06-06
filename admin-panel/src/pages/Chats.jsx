@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import {
     MessageSquare,
     Search,
@@ -23,9 +23,7 @@ const Chats = () => {
 
     const fetchChats = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/chats`, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            const { data } = await api.get('/api/admin/chats');
             setConversations(data);
         } catch (error) {
             console.error("Chats fetch error:", error);
@@ -35,17 +33,17 @@ const Chats = () => {
     };
 
     useEffect(() => {
-        fetchChats();
-    }, [admin.token]);
+        if (admin?.token) {
+            fetchChats();
+        }
+    }, [admin?.token]);
 
     const handleToggleFlag = async (chatId) => {
         try {
-            const { data } = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/chat/${chatId}/flag`, {}, {
-                headers: { Authorization: `Bearer ${admin.token}` }
-            });
+            const { data } = await api.put(`/api/admin/chat/${chatId}/flag`);
             setConversations(conversations.map(c => c._id === chatId ? { ...c, isFlagged: data.isFlagged } : c));
         } catch (error) {
-            alert("Flag update failed");
+            console.error("Flag update failed", error);
         }
     };
 
