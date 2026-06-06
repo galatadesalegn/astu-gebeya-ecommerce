@@ -11,6 +11,7 @@ const Login = () => {
     const [errorMsg, setErrorMsg] = useState('');
     const { login } = useContext(AuthContext);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (location.state?.message) {
