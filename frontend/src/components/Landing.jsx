@@ -27,7 +27,7 @@ const Landing = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-black overflow-hidden selection:bg-[#4f46e5] selection:text-white transition-colors duration-500">
+        <div className="min-h-screen bg-[var(--bg-card)] dark:bg-[var(--bg-main)] overflow-hidden selection:bg-[#4f46e5] selection:text-white transition-colors duration-500">
             {/* Branding Header */}
             <header className="absolute top-0 left-0 right-0 z-50 py-8 px-6 md:px-12">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -35,28 +35,28 @@ const Landing = () => {
                         <img 
                             src={logoImg} 
                             alt="Logo" 
-                            className="w-10 h-10 rounded-xl shadow-lg border-2 border-white group-hover:scale-110 transition-transform duration-300"
+                            className="w-10 h-10 rounded-xl shadow-lg border-2 border-[var(--bg-card)] group-hover:scale-110 transition-transform duration-300"
                         />
-                        <span className="text-xl font-black tracking-tighter text-[#111827] dark:text-white">
+                        <span className="text-xl font-black tracking-tighter text-[var(--text-main)]">
                             ASTU GEBEYA<span className="text-[#4f46e5]">.</span>
                         </span>
                     </Link>
                     <div className="flex items-center gap-6">
                         <button 
                             onClick={toggleTheme}
-                            className="p-2.5 rounded-xl bg-gray-100 dark:bg-zinc-900 text-gray-500 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all active:scale-95 shadow-sm"
+                            className="p-2.5 rounded-xl bg-[var(--bg-section-alt)] text-[var(--text-muted)] hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all active:scale-95 shadow-sm"
                             title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
                         >
                             {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                         </button>
-                        <Link to="/login" className="text-sm font-jakarta font-bold text-gray-500 dark:text-gray-400 hover:text-[#4f46e5] dark:hover:text-white transition-colors">Login</Link>
-                        <Link to="/register" className="px-6 py-2.5 bg-[#111827] dark:bg-white text-white dark:text-black rounded-full text-sm font-jakarta font-bold hover:bg-[#4f46e5] dark:hover:bg-indigo-50 transition-all shadow-sm">Join Us</Link>
+                        <Link to="/login" className="text-sm font-jakarta font-bold text-[var(--text-muted)] hover:text-[#4f46e5] dark:hover:text-white transition-colors">Login</Link>
+                        <Link to="/register" className="px-6 py-2.5 bg-[var(--text-main)] dark:bg-[var(--bg-card)] text-[var(--bg-card)] dark:text-[var(--text-main)] rounded-full text-sm font-jakarta font-bold hover:bg-[#4f46e5] dark:hover:bg-indigo-50 transition-all shadow-sm">Join Us</Link>
                     </div>
                 </div>
             </header>
 
             {/* Hero Section */}
-            <section className="relative pt-40 pb-32 px-6 bg-[#f8f9fb] dark:bg-black min-h-screen flex items-center overflow-hidden transition-colors duration-500" onMouseMove={handleMouseMove}>
+            <section className="relative pt-40 pb-32 px-6 bg-[var(--bg-main)] min-h-screen flex items-center overflow-hidden transition-colors duration-500" onMouseMove={handleMouseMove}>
                 {/* Decorative Background Elements */}
                 <div className="absolute inset-0 z-0">
                     <motion.div 
@@ -99,7 +99,7 @@ const Landing = () => {
                                 New Generation Marketplace
                             </motion.div>
                             
-                            <h1 className="text-5xl md:text-7xl font-syne font-bold tracking-tight leading-[1.1] mb-8 text-[#111827] dark:text-white">
+                            <h1 className="text-5xl md:text-7xl font-syne font-bold tracking-tight leading-[1.1] mb-8 text-[var(--text-main)]">
                                 Shop the Vibe.<br /> 
                                 <span className="relative inline-block">
                                     <span className="relative z-10 text-[#4f46e5]">Elevate Your Style</span>
@@ -112,14 +112,14 @@ const Landing = () => {
                                 </span><br />
                                 with ASTU GEBEYA.
                             </h1>
-                            <p className="text-lg text-gray-500 dark:text-gray-400 font-jakarta font-medium max-w-lg mb-12 leading-relaxed">
+                            <p className="text-lg text-[var(--text-muted)] font-jakarta font-medium max-w-lg mb-12 leading-relaxed">
                                 Experience the future of shopping with our curated collections designed for those who dare to stand out.
                             </p>
                             
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-10">
                                 <Link 
                                     to="/register" 
-                                    className="group px-10 py-5 bg-[#111827] dark:bg-white text-white dark:text-black rounded-2xl font-jakarta font-bold flex items-center gap-3 hover:bg-[#4f46e5] dark:hover:bg-indigo-50 transition-all shadow-2xl shadow-indigo-500/20 active:scale-95"
+                                    className="group px-10 py-5 bg-[var(--text-main)] dark:bg-[var(--bg-card)] text-[var(--bg-card)] dark:text-[var(--text-main)] rounded-2xl font-jakarta font-bold flex items-center gap-3 hover:bg-[#4f46e5] dark:hover:bg-indigo-50 transition-all shadow-2xl shadow-indigo-500/20 active:scale-95"
                                 >
                                     Start Exploring
                                     <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -128,14 +128,14 @@ const Landing = () => {
                                 <div className="flex items-center gap-5">
                                     <div className="flex -space-x-4">
                                         {[1,2,3,4].map(i => (
-                                            <div key={i} className="h-12 w-12 rounded-2xl border-4 border-white dark:border-zinc-900 overflow-hidden shadow-sm">
+                                            <div key={i} className="h-12 w-12 rounded-2xl border-4 border-[var(--bg-card)] overflow-hidden shadow-sm">
                                                 <img src={`https://randomuser.me/api/portraits/${i % 2 === 0 ? 'men' : 'women'}/${i+40}.jpg`} className="h-full w-full object-cover" alt="user" />
                                             </div>
                                         ))}
                                     </div>
                                     <div>
-                                        <p className="text-sm font-jakarta font-black text-[#111827] dark:text-white">15k+ Members</p>
-                                        <p className="text-xs font-jakarta font-bold text-gray-400 dark:text-gray-500">Growing Daily</p>
+                                        <p className="text-sm font-jakarta font-black text-[var(--text-main)]">15k+ Members</p>
+                                        <p className="text-xs font-jakarta font-bold text-[var(--text-muted)]">Growing Daily</p>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ const Landing = () => {
                             className="relative hidden lg:block"
                         >
                             <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-500/10 to-purple-500/10 rounded-[40px] blur-2xl -z-10" />
-                            <div className="relative rounded-[40px] overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 group">
+                            <div className="relative rounded-[40px] overflow-hidden shadow-2xl border-8 border-[var(--bg-card)] group">
                                 <img 
                                     src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1200" 
                                     alt="Style Banner" 
@@ -161,18 +161,18 @@ const Landing = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 1 }}
-                                    className="absolute bottom-8 left-8 right-8 p-6 bg-white/90 dark:bg-black/80 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl"
+                                    className="absolute bottom-8 left-8 right-8 p-6 bg-[var(--bg-card)] dark:bg-black/80 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl"
                                 >
                                     <div className="flex items-center justify-between mb-4">
                                         <div className="flex items-center gap-3">
                                             <div className="p-2 bg-indigo-500 text-white rounded-xl">
                                                 <ShoppingBag className="w-5 h-5" />
                                             </div>
-                                            <span className="font-syne font-bold text-[#111827] dark:text-white">New Collection</span>
+                                            <span className="font-syne font-bold text-[var(--text-main)]">New Collection</span>
                                         </div>
                                         <span className="text-xs font-jakarta font-black text-indigo-500 uppercase tracking-wider">Summer '26</span>
                                     </div>
-                                    <div className="h-2 w-full bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                    <div className="h-2 w-full bg-[var(--bg-section-alt)] rounded-full overflow-hidden">
                                         <motion.div 
                                             initial={{ width: 0 }}
                                             animate={{ width: '75%' }}
@@ -188,7 +188,7 @@ const Landing = () => {
             </section>
 
             {/* Services Section */}
-            <section className="py-24 bg-white dark:bg-black relative overflow-hidden group/services transition-colors duration-500" id="services" onMouseMove={handleMouseMove}>
+            <section className="py-24 bg-[var(--bg-card)] dark:bg-black relative overflow-hidden group/services transition-colors duration-500" id="services" onMouseMove={handleMouseMove}>
                 <motion.div style={{ y: parallaxY3 }} className="absolute inset-0 pointer-events-none z-0">
                     <div className="hidden lg:block absolute top-[20%] right-[10%] w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl" />
                 </motion.div>
@@ -196,7 +196,7 @@ const Landing = () => {
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="text-center mb-20">
                         <span className="text-indigo-600 dark:text-indigo-400 font-jakarta font-bold text-xs uppercase tracking-[0.4em] mb-4 block">The Experience</span>
-                        <h2 className="text-4xl md:text-6xl font-syne font-bold text-[#111827] dark:text-white tracking-tight uppercase">
+                        <h2 className="text-4xl md:text-6xl font-syne font-bold text-[var(--text-main)] tracking-tight uppercase">
                             Our Services
                         </h2>
                     </div>
@@ -225,13 +225,13 @@ const Landing = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -10 }}
-                                className="p-16 rounded-[50px] bg-[#f8f9fb] dark:bg-zinc-950 border border-gray-100 dark:border-zinc-900 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all text-center flex flex-col items-center"
+                                className="p-16 rounded-[50px] bg-[var(--bg-main)] dark:bg-zinc-950 border border-[var(--border-color)] hover:shadow-2xl hover:shadow-indigo-500/10 transition-all text-center flex flex-col items-center"
                             >
                                 <div className="h-24 w-24 bg-[#4f46e5] text-white rounded-[32px] flex items-center justify-center mb-10 shadow-xl shadow-indigo-500/20">
                                     {service.icon}
                                 </div>
-                                <h3 className="text-3xl font-syne font-bold text-[#111827] dark:text-white mb-6 uppercase tracking-tight">{service.title}</h3>
-                                <p className="text-xl text-gray-500 dark:text-gray-400 font-jakarta font-medium leading-relaxed">{service.desc}</p>
+                                <h3 className="text-3xl font-syne font-bold text-[var(--text-main)] mb-6 uppercase tracking-tight">{service.title}</h3>
+                                <p className="text-xl text-[var(--text-muted)] font-jakarta font-medium leading-relaxed">{service.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -239,31 +239,31 @@ const Landing = () => {
             </section>
 
             {/* Inquiry Section */}
-            <section className="py-24 bg-[#f8f9fb] dark:bg-black transition-colors duration-500" id="contact">
+            <section className="py-24 bg-[var(--bg-main)] dark:bg-black transition-colors duration-500" id="contact">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <div>
                             <span className="text-indigo-600 dark:text-indigo-400 font-jakarta font-bold text-xs uppercase tracking-[0.4em] mb-8 block">Connect</span>
-                            <h2 className="text-5xl md:text-7xl font-syne font-bold mb-10 text-[#111827] dark:text-white uppercase leading-none">
+                            <h2 className="text-5xl md:text-7xl font-syne font-bold mb-10 text-[var(--text-main)] uppercase leading-none">
                                 Join the <br /> <span className="text-[#4f46e5] italic">ASTU GEBEYA.</span>
                             </h2>
                             <div className="space-y-8">
                                 <div className="flex items-center gap-6">
-                                    <div className="h-14 w-14 bg-white dark:bg-zinc-900 rounded-2xl flex items-center justify-center shadow-sm border dark:border-zinc-800">
+                                    <div className="h-14 w-14 bg-[var(--bg-card)] dark:bg-zinc-900 rounded-2xl flex items-center justify-center shadow-sm border border-[var(--border-color)]">
                                         <Mail className="h-6 w-6 text-[#4f46e5]" />
                                     </div>
                                     <div>
-                                        <p className="text-xs font-jakarta font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Email</p>
-                                        <p className="text-xl font-jakarta font-bold text-[#111827] dark:text-white">astugebeya@gmail.com</p>
+                                        <p className="text-xs font-jakarta font-bold text-[var(--text-muted)] uppercase tracking-widest mb-1">Email</p>
+                                        <p className="text-xl font-jakarta font-bold text-[var(--text-main)]">astugebeya@gmail.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-6">
-                                    <div className="h-14 w-14 bg-white dark:bg-zinc-900 rounded-2xl flex items-center justify-center shadow-sm border dark:border-zinc-800">
-                                        < Headphones className="h-6 w-6 text-[#4f46e5]" />
+                                    <div className="h-14 w-14 bg-[var(--bg-card)] dark:bg-zinc-900 rounded-2xl flex items-center justify-center shadow-sm border border-[var(--border-color)]">
+                                        <Headphones className="h-6 w-6 text-[#4f46e5]" />
                                     </div>
                                     <div>
-                                        <p className="text-xs font-jakarta font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Support</p>
-                                        <p className="text-xl font-jakarta font-bold text-[#111827] dark:text-white">+251 944 670 015</p>
+                                        <p className="text-xs font-jakarta font-bold text-[var(--text-muted)] uppercase tracking-widest mb-1">Support</p>
+                                        <p className="text-xl font-jakarta font-bold text-[var(--text-main)]">+251 944 670 015</p>
                                     </div>
                                 </div>
                             </div>
@@ -272,13 +272,13 @@ const Landing = () => {
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            className="bg-white dark:bg-zinc-950 p-12 rounded-[50px] shadow-2xl border border-gray-100 dark:border-zinc-900"
+                            className="bg-[var(--bg-card)] dark:bg-zinc-950 p-12 rounded-[50px] shadow-2xl border border-[var(--border-color)]"
                         >
-                            <h3 className="text-3xl font-syne font-bold mb-8 text-[#111827] dark:text-white uppercase tracking-tighter">Inquiry</h3>
+                            <h3 className="text-3xl font-syne font-bold mb-8 text-[var(--text-main)] uppercase tracking-tighter">Inquiry</h3>
                             <form className="space-y-6">
-                                <input type="text" placeholder="Identification" className="w-full bg-[#f8f9fb] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[#111827] dark:text-white placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
-                                <input type="email" placeholder="Communication Channel" className="w-full bg-[#f8f9fb] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[#111827] dark:text-white placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
-                                <textarea rows="4" placeholder="What is your story?" className="w-full bg-[#f8f9fb] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[#111827] dark:text-white resize-none placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required></textarea>
+                                <input type="text" placeholder="Identification" className="w-full bg-[var(--bg-main)] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
+                                <input type="email" placeholder="Communication Channel" className="w-full bg-[var(--bg-main)] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required />
+                                <textarea rows="4" placeholder="What is your story?" className="w-full bg-[var(--bg-main)] dark:bg-black border-none rounded-2xl px-6 py-4 outline-none font-jakarta font-bold text-[var(--text-main)] resize-none placeholder:text-gray-300 dark:placeholder:text-zinc-700 shadow-inner" required></textarea>
                                 <button type="submit" className="w-full bg-[#4f46e5] text-white py-5 rounded-2xl font-jakarta font-bold uppercase tracking-widest hover:bg-[#4338ca] transition-all shadow-xl shadow-indigo-500/20 active:scale-95">
                                     Send Message
                                 </button>
@@ -289,17 +289,17 @@ const Landing = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-24 bg-white dark:bg-black transition-colors duration-500">
+            <section className="py-24 bg-[var(--bg-card)] dark:bg-black transition-colors duration-500">
                 <div className="max-w-3xl mx-auto px-6 text-center">
-                    <h2 className="text-4xl md:text-5xl font-syne font-bold uppercase tracking-tight mb-6 text-[#111827] dark:text-white">
+                    <h2 className="text-4xl md:text-5xl font-syne font-bold uppercase tracking-tight mb-6 text-[var(--text-main)]">
                         Ready to join the <span className="text-[#4f46e5] italic">Atelier?</span>
                     </h2>
-                    <p className="text-lg font-jakarta text-gray-500 dark:text-gray-400 font-medium mb-10">
+                    <p className="text-lg font-jakarta text-[var(--text-muted)] font-medium mb-10">
                         Create an account today and experience the best e-commerce platform in the region.
                     </p>
                     <Link 
                         to="/register" 
-                        className="inline-flex items-center gap-3 px-10 py-5 bg-[#111827] dark:bg-white text-white dark:text-black rounded-2xl font-jakarta font-bold uppercase tracking-wider hover:bg-[#4f46e5] dark:hover:bg-indigo-50 transition-all shadow-xl shadow-indigo-500/20 active:scale-95 text-sm"
+                        className="inline-flex items-center gap-3 px-10 py-5 bg-[var(--text-main)] dark:bg-[var(--bg-card)] text-[var(--bg-card)] dark:text-[var(--text-main)] rounded-2xl font-jakarta font-bold uppercase tracking-wider hover:bg-[#4f46e5] dark:hover:bg-indigo-50 transition-all shadow-xl shadow-indigo-500/20 active:scale-95 text-sm"
                     >
                         Create My Account
                         <Users className="h-5 w-5" />
