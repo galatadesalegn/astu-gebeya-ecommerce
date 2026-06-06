@@ -16,6 +16,7 @@ const sendEmail = async ({ to, subject, html, templateParams = {} }) => {
                     recipient: to, // Added for compatibility
                     to_name: to.split('@')[0],
                     subject,
+                    otp: templateParams.otp || '', // Map OTP specifically
                     message: html,
                     html_message: html,
                     ...templateParams,
