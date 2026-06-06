@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
+import api from '../services/api';
 import { Truck, CreditCard, CheckCircle, ChevronRight, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -51,15 +51,13 @@ const Checkout = () => {
                 seller: item.seller,
             }));
 
-            const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders`, {
+            const { data } = await api.post('/api/orders', {
                 orderItems,
                 shippingAddress,
                 paymentMethod,
                 taxPrice: 0.0,
                 shippingPrice: 0.0,
                 totalPrice: cartTotal,
-            }, {
-                headers: { Authorization: `Bearer ${user.token}` }
             });
 
             clearCart();

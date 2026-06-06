@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import io from 'socket.io-client';
 import { AuthContext } from '../context/AuthContext';
 import { Send, User as UserIcon, ArrowLeft, MoreHorizontal, ShoppingBag, Edit, Trash2, X } from 'lucide-react';
@@ -23,9 +23,7 @@ const ChatInterface = () => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/chat/${conversationId}/messages`, {
-                    headers: { Authorization: `Bearer ${user.token}` }
-                });
+                const { data } = await api.get(`/api/chat/${conversationId}/messages`);
                 setMessages(data);
             } catch (error) {
                 console.error("Chat backend error.");
@@ -34,9 +32,7 @@ const ChatInterface = () => {
 
         const fetchConversation = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
-                    headers: { Authorization: `Bearer ${user.token}` }
-                });
+                const { data } = await api.get('/api/chat');
                 const current = data.find(c => c._id === conversationId);
                 setConversation(current);
             } catch (error) {
@@ -47,16 +43,14 @@ const ChatInterface = () => {
         if (user) {
             // initialize socket when chat mounts
             if (!socketRef.current) {
-                socketRef.current = io(import.meta.env.VITE_BACKEND_URL);
+                socketRef.current = io(import.meta.env.VITE_BACKEND_URL || 'https://astu-gebeya-backend.onrender.com');
             }
 
             fetchMessages();
             fetchConversation();
             socketRef.current.emit('join_room', conversationId);
 
-            axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/chat/${conversationId}/read`, {}, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            }).catch(err => console.error("Failed to mark as read", err));
+            api.put(`/api/chat/${conversationId}/read`, {}).catch(err => console.error("Failed to mark as read", err));
 
             socketRef.current.on('receive_message', (message) => {
                 setMessages((prev) => [...prev, message]);
@@ -91,11 +85,9 @@ const ChatInterface = () => {
         if (!newMessage.trim()) return;
 
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/chat/message`, {
+            const { data } = await api.post('/api/chat/message', {
                 conversationId,
                 text: newMessage,
-            }, {
-                headers: { Authorization: `Bearer ${user.token}` }
             });
 
             socketRef.current?.emit('send_message', { ...data, room: conversationId });
@@ -110,11 +102,9 @@ const ChatInterface = () => {
         if (!editText.trim() || !editingMessage) return;
 
         try {
-            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/chat/message/edit`, {
+            await api.put('/api/chat/message/edit', {
                 messageId: editingMessage._id,
                 text: editText,
-            }, {
-                headers: { Authorization: `Bearer ${user.token}` }
             });
 
             socketRef.current?.emit('edit_message', { room: conversationId, messageId: editingMessage._id, text: editText });
@@ -128,9 +118,7 @@ const ChatInterface = () => {
     const handleDeleteMessage = async (messageId) => {
         if (!window.confirm("Delete this message?")) return;
         try {
-            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/chat/message/${messageId}`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            await api.delete(`/api/chat/message/${messageId}`);
 
             socketRef.current?.emit('delete_message', { room: conversationId, messageId });
         } catch (error) {
@@ -141,9 +129,7 @@ const ChatInterface = () => {
     const handleDeleteConversation = async () => {
         if (!window.confirm("Delete this entire conversation? This cannot be undone.")) return;
         try {
-            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/chat/${conversationId}`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            await api.delete(`/api/chat/${conversationId}`);
             navigate('/inbox');
         } catch (error) {
             console.error(error);

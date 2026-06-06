@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { Star, ShieldCheck, Truck, Headphones, ShoppingCart, ArrowLeft, MessageSquare, ChevronRight, Zap, Phone, Link as LinkIcon, Lock } from 'lucide-react';

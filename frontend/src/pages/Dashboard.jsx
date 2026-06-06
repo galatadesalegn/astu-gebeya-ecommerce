@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, Package, DollarSign, List, Image as ImageIcon, X, LayoutDashboard, BarChart3, Settings, Edit, Trash2, TrendingUp, Calendar, Zap, ShoppingCart, MessageSquare, Eye, Phone, MapPin, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -31,9 +31,7 @@ const SellerDashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/seller/stats`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            const { data } = await api.get('/api/orders/seller/stats');
             setStats(data);
         } catch (error) {
             console.error("Failed to fetch stats");
@@ -47,9 +45,7 @@ const SellerDashboard = () => {
 
     const fetchIncomingOrders = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/seller/orders`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            const { data } = await api.get('/api/orders/seller/orders');
             setIncomingOrders(data);
         } catch (error) {
             console.error("Failed to fetch incoming orders");
@@ -58,9 +54,7 @@ const SellerDashboard = () => {
 
     const fetchListings = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/seller/listings`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            const { data } = await api.get('/api/products/seller/listings');
             setListings(data);
         } catch (error) {
             console.error("Failed to fetch listings");
@@ -92,9 +86,8 @@ const SellerDashboard = () => {
                     imageFiles.map(async (file) => {
                         const uploadData = new FormData();
                         uploadData.append('image', file);
-                        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/upload`, uploadData, {
+                        const { data } = await api.post('/api/upload', uploadData, {
                             headers: {
-                                Authorization: `Bearer ${user.token}`,
                                 'Content-Type': 'multipart/form-data'
                             }
                         });
@@ -107,13 +100,9 @@ const SellerDashboard = () => {
             const mainImageToUse = finalImageUrls.length > 0 ? finalImageUrls[0] : '';
 
             if (editingId) {
-                await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/${editingId}`, { ...formData, image: mainImageToUse, images: finalImageUrls }, {
-                    headers: { Authorization: `Bearer ${user.token}` }
-                });
+                await api.put(`/api/products/${editingId}`, { ...formData, image: mainImageToUse, images: finalImageUrls });
             } else {
-                await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/products`, { ...formData, image: mainImageToUse, images: finalImageUrls }, {
-                    headers: { Authorization: `Bearer ${user.token}` }
-                });
+                await api.post('/api/products', { ...formData, image: mainImageToUse, images: finalImageUrls });
             }
             setShowForm(false);
             setEditingId(null);
@@ -151,12 +140,10 @@ const SellerDashboard = () => {
             const sellerItem = order.orderItems.find(item => item.seller.toString() === user._id.toString());
             if (!sellerItem) return;
 
-            const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/chat/start`, {
+            const { data } = await api.post('/api/chat/start', {
                 productId: sellerItem.product,
                 sellerId: user._id,
                 buyerId: order.user // We'll need the backend to handle buyerId in the body if the requester is the seller
-            }, {
-                headers: { Authorization: `Bearer ${user.token}` }
             });
             navigate(`/chat/${data._id}`);
         } catch (error) {
@@ -167,9 +154,7 @@ const SellerDashboard = () => {
 
     const handleMarkDelivered = async (orderId) => {
         try {
-            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderId}/deliver`, {}, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            await api.put(`/api/orders/${orderId}/deliver`, {});
             showToast("Order marked as delivered!");
             setActivityLog(prev => [{ id: Date.now(), text: `Marked order ${orderId.substring(0, 6)}... as delivered` }, ...prev]);
             setSelectedOrder(null);
@@ -184,9 +169,7 @@ const SellerDashboard = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you certain?')) {
             try {
-                await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`, {
-                    headers: { Authorization: `Bearer ${user.token}` }
-                });
+                await api.delete(`/api/products/${id}`);
                 setListings(listings.filter(item => item._id !== id));
             } catch (error) {
                 console.error("Delete failed", error);

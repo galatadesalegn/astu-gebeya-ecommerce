@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { MessageSquare, ArrowRight, User as UserIcon, Clock, Trash2, ShieldCheck, MailOpen } from 'lucide-react';
 
@@ -12,9 +12,7 @@ const Inbox = () => {
 
     const fetchConversations = async () => {
         try {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            const { data } = await api.get('/api/chat');
 
 
             setConversations(data);
@@ -38,9 +36,7 @@ const Inbox = () => {
         e.stopPropagation();
         if (!window.confirm("Delete this conversation?")) return;
         try {
-            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/chat/${id}`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
+            await api.delete(`/api/chat/${id}`);
             setConversations(conversations.filter(c => c._id !== id));
         } catch (error) {
             console.error("Delete failed");

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, ArrowRight, ArrowLeft, KeyRound, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 
 const PasswordRecovery = () => {
     const [step, setStep] = useState(1); // 1: Email, 2: OTP, 3: New Password
@@ -14,14 +14,12 @@ const PasswordRecovery = () => {
     const [message, setMessage] = useState({ type: '', text: '' });
     const navigate = useNavigate();
 
-    const API_URL = import.meta.env.VITE_BACKEND_URL;
-
     const handleSendOTP = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setMessage({ type: '', text: '' });
         try {
-            const { data } = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
+            const { data } = await api.post('/api/auth/forgot-password', { email });
             setMessage({ type: 'success', text: data.message });
             setStep(2);
         } catch (error) {
@@ -36,7 +34,7 @@ const PasswordRecovery = () => {
         setIsLoading(true);
         setMessage({ type: '', text: '' });
         try {
-            const { data } = await axios.post(`${API_URL}/api/auth/verify-reset-otp`, { email, otp });
+            const { data } = await api.post('/api/auth/verify-reset-otp', { email, otp });
             setMessage({ type: 'success', text: data.message });
             setStep(3);
         } catch (error) {
@@ -54,7 +52,7 @@ const PasswordRecovery = () => {
         setIsLoading(true);
         setMessage({ type: '', text: '' });
         try {
-            const { data } = await axios.post(`${API_URL}/api/auth/reset-password`, { email, otp, password });
+            const { data } = await api.post('/api/auth/reset-password', { email, otp, password });
             setMessage({ type: 'success', text: data.message });
             setTimeout(() => navigate('/login'), 2000);
         } catch (error) {
