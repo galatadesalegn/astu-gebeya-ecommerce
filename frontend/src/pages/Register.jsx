@@ -17,12 +17,23 @@ const Register = () => {
     const location = useLocation();
 
     useEffect(() => {
-        if (location.state?.triggerOTP && location.state?.email) {
-            setFormData(prev => ({ ...prev, email: location.state.email }));
-            setShowOTP(true);
-            setSuccessMsg('Please enter the verification code sent to your email.');
-        }
-    }, [location.state]);
+        const handleAutoResend = async () => {
+            if (location.state?.triggerOTP && location.state?.email) {
+                setFormData(prev => ({ ...prev, email: location.state.email }));
+                setShowOTP(true);
+                setSuccessMsg('Authenticating your account... sending a new verification code.');
+                
+                try {
+                    await resendOTP(location.state.email);
+                    setSuccessMsg('A new verification code has been sent to your email.');
+                } catch (error) {
+                    console.error('Failed to auto-resend OTP:', error);
+                    setErrorMsg('We tried to send a new code but failed. Please click "Resend" below.');
+                }
+            }
+        };
+        handleAutoResend();
+    }, [location.state, resendOTP]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
