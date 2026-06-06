@@ -25,19 +25,16 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (name, email, password, role) => {
         const { data } = await api.post(`/api/auth/register`, { name, email, password, role });
-        setUser(data);
-        localStorage.setItem('user', JSON.stringify(data));
+        // DO NOT setUser(data) or save to localStorage here
+        // The user is not yet verified.
         return data;
     };
 
     const verifyOTP = async (email, otp) => {
         const { data } = await api.post(`/api/auth/verify-otp`, { email, otp });
-        // Update local user state
-        if (user) {
-            const updatedUser = { ...user, isVerified: true, emailVerified: true };
-            setUser(updatedUser);
-            localStorage.setItem('user', JSON.stringify(updatedUser));
-        }
+        // After successful verification, the user can log in.
+        // We don't have the token yet because register doesn't return it anymore.
+        // The user will be redirected to login page.
         return data;
     };
 

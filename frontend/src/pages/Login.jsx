@@ -10,7 +10,14 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const { login } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.message) {
+            setErrorMsg(location.state.message); // Using errorMsg state to show the success message for simplicity
+            if (location.state.email) setEmail(location.state.email);
+        }
+    }, [location.state]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

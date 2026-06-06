@@ -90,8 +90,8 @@ export const registerUser = async (req, res) => {
             email: user.email,
             role: user.role,
             emailVerified: false,
-            token: generateToken(user._id),
-            refreshToken: generateRefreshToken(user._id),
+            // token: generateToken(user._id), // REMOVED: Do not give token until verified
+            // refreshToken: generateRefreshToken(user._id), // REMOVED: Do not give token until verified
             message: 'Registration successful! A 6-digit verification code has been sent to your email.',
         });
     } catch (error) {

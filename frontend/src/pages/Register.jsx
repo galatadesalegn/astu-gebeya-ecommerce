@@ -50,11 +50,13 @@ const Register = () => {
         setErrorMsg('');
         try {
             await verifyOTP(formData.email, otp);
-            if (formData.role === 'Seller') {
-                navigate('/dashboard');
-            } else {
-                navigate('/');
-            }
+            // After verification, redirect to login page with success state
+            navigate('/login', { 
+                state: { 
+                    message: 'Email verified successfully! Please login to continue.',
+                    email: formData.email 
+                } 
+            });
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Verification failed. Please check the code.');
         } finally {
