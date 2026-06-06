@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useContext, useRef } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { CartContext } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext';
 import {
     Search, Filter, ShoppingCart, Star, Sparkles, Zap, 
     ShieldCheck, ChevronLeft, ChevronRight, Heart
@@ -23,8 +24,15 @@ const Collection = () => {
     const [minRating, setMinRating] = useState(0);
     const [sortBy, setSortBy] = useState('newest');
     const { addToCart } = useContext(CartContext);
+    const { user } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        }
+    }, [user, navigate]);
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);

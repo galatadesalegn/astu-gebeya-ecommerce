@@ -1,12 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { CartContext } from '../context/CartContext';
-import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag, ArrowRight } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
+import { 
+    Trash2, 
+    Plus, 
+    Minus, 
+    ArrowLeft, 
+    ShoppingBag, 
+    ArrowRight, 
+    ShieldCheck, 
+    Truck, 
+    CreditCard 
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, cartTotal, cartCount } = useContext(CartContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        }
+    }, [user, navigate]);
 
     return (
         <div className="bg-[var(--bg-main)] min-h-screen pt-32 pb-32 transition-colors duration-500">

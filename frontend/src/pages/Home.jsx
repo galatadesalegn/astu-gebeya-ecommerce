@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo, useContext, useRef } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { CartContext } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext';
+import Landing from '../components/Landing';
 import {
     Search, Filter, ShoppingCart, Star, ArrowRight,
     Sparkles, Zap, ShieldCheck, Truck, Headphones,
@@ -68,6 +70,7 @@ const Home = () => {
     const [minRating, setMinRating] = useState(0);
     const [sortBy, setSortBy] = useState('newest');
     const { addToCart } = useContext(CartContext);
+    const { user } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -87,6 +90,7 @@ const Home = () => {
     const query = useMemo(() => new URLSearchParams(location.search).get('search'), [location.search]);
 
     useEffect(() => {
+        if (!user) return; // Don't fetch if not logged in
         const fetchProducts = async () => {
             setLoading(true);
             try {
@@ -130,6 +134,10 @@ const Home = () => {
     const bestProducts = useMemo(() => {
         return [...products].sort((a, b) => b.rating - a.rating).slice(0, 3);
     }, [products]);
+
+    if (!user) {
+        return <Landing />;
+    }
 
     return (
         <div className="bg-[var(--bg-main)] dark:bg-[var(--bg-main)] min-h-screen selection:bg-orange-500 selection:text-white transition-colors duration-500 relative">
