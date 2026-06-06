@@ -238,7 +238,7 @@ export const loginUser = async (req, res) => {
         }
 
         // ── Block Unverified Users ──
-        if (!user.emailVerified) {
+        if (!user.emailVerified && !user.isVerified) {
             return res.status(403).json({
                 message: 'Please verify your email address before logging in.',
                 emailVerified: false,

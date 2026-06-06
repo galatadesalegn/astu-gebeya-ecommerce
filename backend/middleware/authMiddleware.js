@@ -44,12 +44,12 @@ export const protect = async (req, res, next) => {
 
 // Middleware to ensure email is verified
 export const verifiedOnly = (req, res, next) => {
-    if (req.user && req.user.isVerified) {
+    if (req.user && (req.user.isVerified || req.user.emailVerified)) {
         next();
     } else {
         res.status(403).json({
-            message: 'Please verify your email address before performing this action.',
-            requiresVerification: true,
+            message: 'Please verify your email address to perform this action.',
+            emailVerified: false
         });
     }
 };

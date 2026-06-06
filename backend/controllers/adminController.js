@@ -98,7 +98,7 @@ export const toggleVerification = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
         user.isVerified = !user.isVerified;
-        user.emailVerified = user.isVerified;
+        user.emailVerified = user.isVerified; // Sync both fields
         // Clear verification tokens/codes when admin manually verifies
         if (user.isVerified) {
             user.verificationToken = undefined;
