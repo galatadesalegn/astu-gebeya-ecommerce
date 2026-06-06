@@ -29,8 +29,14 @@ const Register = () => {
                 } catch (error) {
                     console.error('Failed to auto-resend OTP:', error);
                     const errorMsg = error.response?.data?.message || 'We tried to send a new code but failed. Please click "Resend" below.';
-                    setErrorMsg(errorMsg);
-                    setSuccessMsg(''); // Clear success msg on error
+                    
+                    if (errorMsg.includes('already verified')) {
+                        setSuccessMsg('Your email is already verified! Redirecting to login...');
+                        setTimeout(() => navigate('/login'), 2000);
+                    } else {
+                        setErrorMsg(errorMsg);
+                        setSuccessMsg(''); 
+                    }
                 }
             }
         };
