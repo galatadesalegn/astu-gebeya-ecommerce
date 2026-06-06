@@ -133,7 +133,15 @@ export const verifyOTP = async (req, res) => {
 
         res.json({
             message: 'Email verified successfully! You can now log in.',
-            emailVerified: true,
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            adminRole: user.adminRole,
+            isVerified: user.isVerified,
+            emailVerified: user.emailVerified,
+            token: generateToken(user._id),
+            refreshToken: generateRefreshToken(user._id),
         });
     } catch (error) {
         res.status(500).json({ message: error.message });

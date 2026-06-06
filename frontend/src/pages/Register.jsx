@@ -68,14 +68,14 @@ const Register = () => {
         setIsLoading(true);
         setErrorMsg('');
         try {
-            await verifyOTP(formData.email, otp);
-            // After verification, redirect to login page with success state
-            navigate('/login', { 
-                state: { 
-                    message: 'Email verified successfully! Please login to continue.',
-                    email: formData.email 
-                } 
-            });
+            const data = await verifyOTP(formData.email, otp);
+            // After verification, the user is automatically logged in by verifyOTP context function.
+            // We just need to navigate to the appropriate dashboard.
+            if (data.role === 'Seller') {
+                navigate('/dashboard');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Verification failed. Please check the code.');
         } finally {

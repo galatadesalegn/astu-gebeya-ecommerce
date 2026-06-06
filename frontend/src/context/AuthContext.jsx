@@ -32,9 +32,10 @@ export const AuthProvider = ({ children }) => {
 
     const verifyOTP = async (email, otp) => {
         const { data } = await api.post(`/api/auth/verify-otp`, { email, otp });
-        // After successful verification, the user can log in.
-        // We don't have the token yet because register doesn't return it anymore.
-        // The user will be redirected to login page.
+        // After successful verification, we automatically log the user in
+        // since the backend now returns the user data and tokens
+        setUser(data);
+        localStorage.setItem('user', JSON.stringify(data));
         return data;
     };
 
