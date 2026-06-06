@@ -13,12 +13,6 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Hide navbar on landing, login, and register pages when user is not logged in
-    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password';
-    if (!user && (location.pathname === '/' || isAuthPage)) {
-        return null;
-    }
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -41,6 +35,12 @@ const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isUserDropdownOpen]);
+
+    // Hide navbar on landing, login, and register pages when user is not logged in
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password';
+    if (!user && (location.pathname === '/' || isAuthPage)) {
+        return null;
+    }
 
     const handleLogout = () => {
         logout();

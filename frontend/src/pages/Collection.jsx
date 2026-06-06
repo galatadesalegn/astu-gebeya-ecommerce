@@ -18,26 +18,21 @@ const CATEGORIES = [
 
 const Collection = () => {
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [productsLoading, setProductsLoading] = useState(false);
     const [activeCategory, setActiveCategory] = useState('All');
     const [priceRange, setPriceRange] = useState(1000000);
     const [minRating, setMinRating] = useState(0);
     const [sortBy, setSortBy] = useState('newest');
     const { addToCart } = useContext(CartContext);
-    const { user } = useContext(AuthContext);
+    const { user, loading: authLoading } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
+        if (!authLoading && !user) {
             navigate('/login');
         }
-    }, [user, navigate]);
-
-    // Don't render if user is not present (prevent white screen during redirect)
-    if (!user) {
-        return <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center font-black uppercase tracking-widest">Verifying access...</div>;
-    }
+    }, [user, authLoading, navigate]);
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -59,7 +54,7 @@ const Collection = () => {
         const controller = new AbortController();
         
         const fetchProducts = async () => {
-            setLoading(true);
+            setProductsLoading(true);
             try {
                 const { data } = await api.get(`/api/products`, {
                     signal: controller.signal
@@ -79,7 +74,7 @@ const Collection = () => {
                 }
                 console.error('Failed to fetch products', error);
             } finally {
-                setLoading(false);
+                setProductsLoading(false);
             }
         };
         fetchProducts();
@@ -102,6 +97,20 @@ const Collection = () => {
         if (sortBy === 'price-high') result.sort((a, b) => (b.price || 0) - (a.price || 0));
         return result;
     }, [products, activeCategory, query, sortBy]);
+
+    // Handle initialization loading (Conditional returns MUST be after all hooks)
+    if (authLoading) {
+        return (
+            <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-500 animate-pulse">Accessing Collection</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user) return null;
 
     return (
         <div className="pt-24 min-h-screen bg-[var(--bg-main)]">
@@ -134,7 +143,7 @@ const Collection = () => {
 
                 <h2 className="text-4xl font-black uppercase mb-12">The Collection</h2>
 
-                {loading ? (
+                {productsLoading ? (
                     <div className="text-center py-20 font-black uppercase tracking-widest">Sourcing items...</div>
                 ) : filteredProducts.length === 0 ? (
                     <div className="text-center py-20 border-2 border-dashed border-[var(--border-color)] rounded-[40px]">

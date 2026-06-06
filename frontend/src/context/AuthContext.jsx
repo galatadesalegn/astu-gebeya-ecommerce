@@ -4,18 +4,26 @@ import api from '../services/api';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            try {
-                const parsed = JSON.parse(savedUser);
-                return typeof parsed === 'object' ? parsed : null;
-            } catch (e) {
-                return null;
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const initializeAuth = () => {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                try {
+                    const parsed = JSON.parse(savedUser);
+                    if (parsed && typeof parsed === 'object') {
+                        setUser(parsed);
+                    }
+                } catch (e) {
+                    localStorage.removeItem('user');
+                }
             }
-        }
-        return null;
-    });
+            setLoading(false);
+        };
+        initializeAuth();
+    }, []);
 
     const login = async (email, password) => {
         const { data } = await api.post(`/api/auth/login`, { email, password });
@@ -50,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, verifyOTP, resendOTP }}>
+        <AuthContext.Provider value={{ user, loading, login, register, logout, verifyOTP, resendOTP }}>
             {children}
         </AuthContext.Provider>
     );

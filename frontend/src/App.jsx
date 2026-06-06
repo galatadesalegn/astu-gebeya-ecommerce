@@ -28,20 +28,26 @@ function App() {
             <div className="min-h-screen bg-[var(--bg-main)] flex flex-col transition-colors duration-500">
               <Navbar />
               <main className="flex-1">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/collection" element={<Collection />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/forgot-password" element={<PasswordRecovery />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/chat/:conversationId" element={<Suspense fallback={<div>Loading...</div>}><Chat /></Suspense>} />
-                  <Route path="/messages" element={<Suspense fallback={<div>Loading...</div>}><Inbox /></Suspense>} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/product/:id" element={<ProductDetail />} />
-                </Routes>
+                <Suspense fallback={
+                  <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center">
+                    <div className="w-12 h-12 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin" />
+                  </div>
+                }>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/collection" element={<Collection />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/forgot-password" element={<PasswordRecovery />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/chat/:conversationId" element={<Chat />} />
+                    <Route path="/messages" element={<Inbox />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                  </Routes>
+                </Suspense>
               </main>
               <Footer />
             </div>
