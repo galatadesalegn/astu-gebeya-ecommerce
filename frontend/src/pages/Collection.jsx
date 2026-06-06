@@ -30,7 +30,7 @@ const Collection = () => {
 
     useEffect(() => {
         if (!authLoading && !user) {
-            navigate('/login');
+            navigate('/');
         }
     }, [user, authLoading, navigate]);
 

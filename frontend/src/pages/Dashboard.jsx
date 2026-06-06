@@ -66,7 +66,7 @@ const SellerDashboard = () => {
 
     useEffect(() => {
         if (!user) {
-            navigate('/login');
+            navigate('/');
             return;
         }
         if (user.role !== 'Seller') {

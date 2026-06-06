@@ -1,11 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { User, Mail, Shield, Bell, CreditCard, ArrowRight, Camera, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
     const [activeTab, setActiveTab] = useState('profile');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/');
+        }
+    }, [user, loading, navigate]);
 
     const tabs = [
         { id: 'profile', label: 'Profile', icon: <User className="h-4 w-4" /> },

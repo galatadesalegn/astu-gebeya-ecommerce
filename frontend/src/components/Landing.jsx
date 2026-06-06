@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { Users, ArrowRight, Star, ShoppingBag, Sparkles, Zap, ShieldCheck, Mail, Headphones } from 'lucide-react';
+import { Users, ArrowRight, Star, ShoppingBag, Sparkles, Zap, ShieldCheck, Mail, Headphones, Moon, Sun } from 'lucide-react';
 import logoImg from '../assets/astu-gebeya.jpg';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Landing = () => {
+    const { theme, toggleTheme } = useContext(ThemeContext);
     const sectionRef = useRef(null);
     const { scrollYProgress: globalScroll } = useScroll();
     const parallaxY1 = useTransform(globalScroll, [0, 1], [0, 200]);
@@ -40,6 +42,13 @@ const Landing = () => {
                         </span>
                     </Link>
                     <div className="flex items-center gap-6">
+                        <button 
+                            onClick={toggleTheme}
+                            className="p-2.5 rounded-xl bg-gray-100 text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 transition-all active:scale-95 shadow-sm"
+                            title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+                        >
+                            {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                        </button>
                         <Link to="/login" className="text-sm font-jakarta font-bold text-gray-500 hover:text-[#4f46e5] transition-colors">Login</Link>
                         <Link to="/register" className="px-6 py-2.5 bg-[#111827] text-white rounded-full text-sm font-jakarta font-bold hover:bg-[#4f46e5] transition-all shadow-sm">Join Us</Link>
                     </div>
