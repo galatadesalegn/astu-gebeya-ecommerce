@@ -52,8 +52,10 @@ const Dashboard = () => {
                 setLoading(false);
             }
         };
-        fetchStats();
-    }, [admin.token]);
+        if (admin?.token) {
+            fetchStats();
+        }
+    }, [admin?.token]);
 
     const chartData = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
