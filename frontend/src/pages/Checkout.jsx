@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
@@ -44,7 +44,7 @@ const Checkout = () => {
         return null;
     }
 
-    if (cartItems.length === 0) {
+    if (cartItems.length === 0 && step !== 3) {
         navigate('/cart');
         return null;
     }
