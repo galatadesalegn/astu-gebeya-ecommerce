@@ -12,8 +12,12 @@ const sendEmail = async ({ to, subject, html, templateParams = {} }) => {
                 accessToken: process.env.EMAILJS_PRIVATE_KEY, // Use accessToken for Private Key in payload
                 template_params: {
                     to_email: to,
+                    email: to, // Added for compatibility
+                    recipient: to, // Added for compatibility
+                    to_name: to.split('@')[0],
                     subject,
-                    html,
+                    message: html,
+                    html_message: html,
                     ...templateParams,
                 },
             };
