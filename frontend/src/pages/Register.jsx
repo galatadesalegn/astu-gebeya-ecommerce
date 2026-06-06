@@ -74,7 +74,7 @@ const Register = () => {
             if (data.role === 'Seller') {
                 navigate('/dashboard');
             } else {
-                navigate('/');
+                navigate('/collection');
             }
         } catch (error) {
             setErrorMsg(error.response?.data?.message || 'Verification failed. Please check the code.');
@@ -100,8 +100,8 @@ const Register = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-[var(--bg-main)] relative overflow-hidden transition-colors duration-500">
             
-            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-100/30 blur-[100px] rounded-full" />
-            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-slate-200/40 blur-[100px] rounded-full" />
+            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-100/30 blur-3xl rounded-full" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-slate-200/40 blur-3xl rounded-full" />
 
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

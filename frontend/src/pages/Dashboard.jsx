@@ -29,11 +29,12 @@ const SellerDashboard = () => {
 
     const navigate = useNavigate();
 
-    const fetchStats = async () => {
+    const fetchStats = async (signal) => {
         try {
-            const { data } = await api.get('/api/orders/seller/stats');
+            const { data } = await api.get('/api/orders/seller/stats', { signal });
             setStats(data);
         } catch (error) {
+            if (error.name === 'CanceledError' || error.name === 'AbortError') return;
             console.error("Failed to fetch stats");
             setStats({
                 totalRevenue: 2450,
@@ -43,20 +44,22 @@ const SellerDashboard = () => {
         }
     };
 
-    const fetchIncomingOrders = async () => {
+    const fetchIncomingOrders = async (signal) => {
         try {
-            const { data } = await api.get('/api/orders/seller/orders');
+            const { data } = await api.get('/api/orders/seller/orders', { signal });
             setIncomingOrders(data);
         } catch (error) {
+            if (error.name === 'CanceledError' || error.name === 'AbortError') return;
             console.error("Failed to fetch incoming orders");
         }
     };
 
-    const fetchListings = async () => {
+    const fetchListings = async (signal) => {
         try {
-            const { data } = await api.get('/api/products/seller/listings');
+            const { data } = await api.get('/api/products/seller/listings', { signal });
             setListings(data);
         } catch (error) {
+            if (error.name === 'CanceledError' || error.name === 'AbortError') return;
             console.error("Failed to fetch listings");
         }
     };
@@ -70,9 +73,16 @@ const SellerDashboard = () => {
             navigate('/');
             return;
         }
-        fetchListings();
-        fetchStats();
-        fetchIncomingOrders();
+
+        const controller = new AbortController();
+        
+        fetchListings(controller.signal);
+        fetchStats(controller.signal);
+        fetchIncomingOrders(controller.signal);
+
+        return () => {
+            controller.abort();
+        };
     }, [user, navigate]);
 
     const handleSubmit = async (e) => {

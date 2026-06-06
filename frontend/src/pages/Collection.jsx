@@ -34,6 +34,11 @@ const Collection = () => {
         }
     }, [user, navigate]);
 
+    // Don't render if user is not present (prevent white screen during redirect)
+    if (!user) {
+        return <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center font-black uppercase tracking-widest">Verifying access...</div>;
+    }
+
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
     const springConfig = { damping: 25, stiffness: 150 };
@@ -49,33 +54,52 @@ const Collection = () => {
     const query = useMemo(() => new URLSearchParams(location.search).get('search'), [location.search]);
 
     useEffect(() => {
+        if (!user) return;
+        
+        const controller = new AbortController();
+        
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const { data } = await api.get(`/api/products`);
-                const productList = data.products || (Array.isArray(data) ? data : []);
-                setProducts(productList.map(p => ({
-                    ...p,
-                    rating: Number(p.rating || (4.0 + Math.random() * 1.0).toFixed(1)),
-                    reviews: p.reviews || Math.floor(Math.random() * 2000),
-                })));
+                const { data } = await api.get(`/api/products`, {
+                    signal: controller.signal
+                });
+                
+                if (data) {
+                    const productList = data.products || (Array.isArray(data) ? data : []);
+                    setProducts(productList.filter(p => p).map(p => ({
+                        ...p,
+                        rating: Number(p.rating || (4.0 + Math.random() * 1.0).toFixed(1)),
+                        reviews: p.reviews || Math.floor(Math.random() * 2000),
+                    })));
+                }
             } catch (error) {
+                if (error.name === 'CanceledError' || error.name === 'AbortError') {
+                    return;
+                }
                 console.error('Failed to fetch products', error);
             } finally {
                 setLoading(false);
             }
         };
         fetchProducts();
-    }, []);
+
+        return () => {
+            controller.abort();
+        };
+    }, [user]);
 
     const filteredProducts = useMemo(() => {
         let result = products.filter(p => {
-            const matchesCategory = activeCategory === 'All' || p.category.toLowerCase() === activeCategory.toLowerCase();
-            const matchesSearch = !query || p.title.toLowerCase().includes(query.toLowerCase());
+            if (!p) return false;
+            const category = p.category || '';
+            const title = p.title || '';
+            const matchesCategory = activeCategory === 'All' || category.toLowerCase() === activeCategory.toLowerCase();
+            const matchesSearch = !query || title.toLowerCase().includes(query.toLowerCase());
             return matchesCategory && matchesSearch;
         });
-        if (sortBy === 'price-low') result.sort((a, b) => a.price - b.price);
-        if (sortBy === 'price-high') result.sort((a, b) => b.price - a.price);
+        if (sortBy === 'price-low') result.sort((a, b) => (a.price || 0) - (b.price || 0));
+        if (sortBy === 'price-high') result.sort((a, b) => (b.price || 0) - (a.price || 0));
         return result;
     }, [products, activeCategory, query, sortBy]);
 

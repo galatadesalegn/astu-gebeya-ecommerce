@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Sparkles, Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Footer = () => {
+    const { user } = useContext(AuthContext);
+    const location = useLocation();
+
+    // Hide footer on landing, login, and register pages when user is not logged in
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password';
+    if (!user && (location.pathname === '/' || isAuthPage)) {
+        return null;
+    }
+
     return (
         <footer className="bg-[var(--bg-card)] pt-24 pb-12 text-[var(--text-main)] border-t border-[var(--border-color)]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

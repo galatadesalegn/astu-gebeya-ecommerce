@@ -32,7 +32,7 @@ const Login = () => {
             if (savedUser && savedUser.role === 'Seller') {
                 navigate('/dashboard');
             } else {
-                navigate('/');
+                navigate('/collection');
             }
         } catch (error) {
             console.error('Login error details:', error.response || error);
@@ -58,8 +58,8 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-[var(--bg-main)] relative overflow-hidden transition-colors duration-500">
             
-            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-100/30 blur-[100px] rounded-full" />
-            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-slate-200/40 blur-[100px] rounded-full" />
+            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-100/30 blur-3xl rounded-full" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-slate-200/40 blur-3xl rounded-full" />
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -144,7 +144,7 @@ const Login = () => {
                         <div className="space-y-2">
                             <div className="flex justify-between items-center px-1">
                                 <label className="text-xs font-black text-slate-900 uppercase tracking-widest">Password</label>
-                                <Link to="/forgot-password" size="sm" className="text-xs font-bold text-orange-600 hover:text-orange-700">Forgot Password?</Link>
+                                <Link to="/forgot-password" className="text-xs font-bold text-orange-600 hover:text-orange-700">Forgot Password?</Link>
                             </div>
                             <div className="relative group">
                                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300 group-focus-within:text-slate-900 transition-colors" />

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/astu-gebeya.jpg';
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
@@ -11,6 +11,14 @@ const Navbar = () => {
     const { cartCount } = useContext(CartContext);
     const { theme, toggleTheme } = useContext(ThemeContext);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Hide navbar on landing, login, and register pages when user is not logged in
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password';
+    if (!user && (location.pathname === '/' || isAuthPage)) {
+        return null;
+    }
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -53,7 +61,7 @@ const Navbar = () => {
                     <div className="px-4 sm:px-6 xl:px-8 relative z-20 md:group-hover:bg-[var(--bg-main)] transition-colors duration-500">
                         <div className="flex justify-between h-20 items-center gap-4">
                             {/* Logo */}
-                            <Link to="/" className="flex items-center gap-3 shrink-0 group">
+                            <Link to={user ? (user.role === 'Seller' ? '/dashboard' : '/collection') : '/'} className="flex items-center gap-3 shrink-0 group">
                                 <img
                                     src={logoImg}
                                     alt="ASTU GEBEYA logo"
@@ -149,6 +157,10 @@ const Navbar = () => {
                                                         Seller Dashboard
                                                     </Link>
                                                 )}
+                                                <Link to="/settings" onClick={() => setIsUserDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 text-xs font-black text-[var(--text-main)] hover:bg-orange-500/10 hover:text-orange-600 rounded-xl transition-all uppercase tracking-widest group/item">
+                                                    <Settings className="h-4 w-4 text-orange-500 group-hover/item:scale-110 transition-transform" />
+                                                    Account Settings
+                                                </Link>
                                                 <Link to="/cart" onClick={() => setIsUserDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 text-xs font-black text-[var(--text-main)] hover:bg-orange-500/10 hover:text-orange-600 rounded-xl transition-all uppercase tracking-widest group/item">
                                                     <ShoppingCart className="h-4 w-4 text-orange-500 group-hover/item:scale-110 transition-transform" />
                                                     My Selection ({cartCount})

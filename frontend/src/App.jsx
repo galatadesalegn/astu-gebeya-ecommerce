@@ -10,6 +10,7 @@ import Collection from './pages/Collection';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Settings from './pages/Settings';
 const Chat = lazy(() => import('./pages/Chat'));
 const Inbox = lazy(() => import('./pages/Inbox'));
 import Cart from './pages/Cart';
@@ -34,6 +35,7 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot-password" element={<PasswordRecovery />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/settings" element={<Settings />} />
                   <Route path="/chat/:conversationId" element={<Suspense fallback={<div>Loading...</div>}><Chat /></Suspense>} />
                   <Route path="/messages" element={<Suspense fallback={<div>Loading...</div>}><Inbox /></Suspense>} />
                   <Route path="/cart" element={<Cart />} />
