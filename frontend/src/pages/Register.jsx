@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Mail, Lock, User as UserIcon, ArrowRight, ShoppingCart, CheckCircle, Sparkles } from 'lucide-react';
+import { Mail, Lock, User as UserIcon, ArrowRight, ShoppingCart, CheckCircle, Sparkles, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Register = () => {
@@ -99,7 +99,14 @@ const Register = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-[var(--bg-main)] relative overflow-hidden transition-colors duration-500">
-            
+            {/* Back to Home Button */}
+            <Link 
+                to="/" 
+                className="absolute top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-slate-900 font-bold text-sm shadow-sm hover:bg-[var(--bg-section-alt)] transition-all group"
+            >
+                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                <span>Back to Home</span>
+            </Link>
             <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-100/30 blur-3xl rounded-full" />
             <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-slate-200/40 blur-3xl rounded-full" />
 
