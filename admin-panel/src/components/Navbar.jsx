@@ -21,7 +21,7 @@ const Navbar = () => {
                 axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/products`, { headers: { Authorization: `Bearer ${admin.token}` } })
             ]);
 
-            const flaggedChats = chatsRes.data.filter(c => c.isFlagged).map(c => ({
+            const flaggedChats = (Array.isArray(chatsRes.data) ? chatsRes.data : []).filter(c => c.isFlagged).map(c => ({
                 id: c._id,
                 type: 'CHAT',
                 title: 'Flagged Conversation',
