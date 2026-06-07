@@ -10,7 +10,7 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-7.x-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Deploy](https://img.shields.io/badge/live-online-brightgreen?style=flat-square)](https://your-live-url.com)
+[![Deploy](https://img.shields.io/badge/live-online-brightgreen?style=flat-square)](https://astugebeya.vercel.app/)
 
 <br/>
 
@@ -18,7 +18,7 @@
 
 <br/>
 
-**[🌐 Live Demo](https://your-live-url.com)** · **[🛠 Admin Panel](https://your-admin-url.com)** · **[🐛 Report Bug](https://github.com/galatadesalegn/shopflow/issues)**
+**[🌐 Live Demo](https://astugebeya.vercel.app/)** · **[🛠 Admin Panel](https://astugebeyaadminpanel.vercel.app/)** · **[🐛 Report Bug](https://github.com/galatadesalegn/shopflow/issues)**
 
 </div>
 

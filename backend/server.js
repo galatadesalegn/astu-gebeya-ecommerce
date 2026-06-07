@@ -45,13 +45,10 @@ if (typeof trustProxyEnv !== 'undefined') {
 
 // ─── Allowed Origins (restrict in production) ───
 const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.ADMIN_URL,
     'https://astugebeya.vercel.app',
     'https://astugebeyaadminpanel.vercel.app',
-    process.env.FRONTEND_URL,
-    process.env.ADMIN_PANEL_URL,
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://localhost:3000'
 ].filter(Boolean);
 
 // ─── Security Middleware ───

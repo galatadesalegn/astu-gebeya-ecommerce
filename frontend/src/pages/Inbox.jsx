@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
-import { MessageSquare, ArrowRight, User as UserIcon, Clock, Trash2, ShieldCheck, MailOpen } from 'lucide-react';
+import { MessageSquare, ArrowRight, User as UserIcon, Clock, Trash2, ShieldCheck, MailOpen, ArrowLeft } from 'lucide-react';
 
 const Inbox = () => {
     const { user } = useContext(AuthContext);
@@ -52,6 +52,13 @@ const Inbox = () => {
     return (
         <div className="bg-[var(--bg-main)] min-h-screen pt-32 pb-20 transition-colors duration-500">
             <div className="max-w-4xl mx-auto px-4">
+                <button 
+                    onClick={() => navigate(-1)} 
+                    className="inline-flex items-center space-x-2 text-[var(--text-muted)] hover:text-orange-500 transition-colors group mb-8"
+                >
+                    <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="font-bold uppercase tracking-tight text-sm">Back</span>
+                </button>
                 <div className="mb-10 flex items-center justify-between">
                     <div>
                         <h1 className="text-4xl font-black text-[var(--text-main)] tracking-tight mb-2 uppercase">Messages</h1>

@@ -5,7 +5,7 @@ import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import {
     Search, Filter, ShoppingCart, Star, Sparkles, Zap, 
-    ShieldCheck, ChevronLeft, ChevronRight, Heart, Lock
+    ShieldCheck, ChevronLeft, ChevronRight, Heart, Lock, ArrowLeft
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
@@ -114,7 +114,16 @@ const Collection = () => {
 
     return (
         <div className="pt-24 min-h-screen bg-[var(--bg-main)]">
-            <section className="py-20 max-w-7xl mx-auto px-4" onMouseMove={handleMouseMove}>
+            <div className="max-w-7xl mx-auto px-4 pt-8">
+                <button 
+                    onClick={() => navigate(-1)} 
+                    className="inline-flex items-center space-x-2 text-[var(--text-muted)] hover:text-orange-500 transition-colors group"
+                >
+                    <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="font-bold uppercase tracking-tight text-sm">Back</span>
+                </button>
+            </div>
+            <section className="py-12 max-w-7xl mx-auto px-4" onMouseMove={handleMouseMove}>
                 <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8 bg-[var(--bg-card)] p-6 rounded-[30px] border border-[var(--border-color)]">
                     <div className="flex flex-wrap items-center gap-4">
                         {CATEGORIES.map((cat) => (

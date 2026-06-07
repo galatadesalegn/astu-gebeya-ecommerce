@@ -43,7 +43,7 @@ const ChatInterface = () => {
         if (user) {
             // initialize socket when chat mounts
             if (!socketRef.current) {
-                socketRef.current = io(import.meta.env.VITE_BACKEND_URL || 'https://astu-gebeya-backend.onrender.com');
+                socketRef.current = io(import.meta.env.VITE_BACKEND_URL || 'https://astugebeya.onrender.com');
             }
 
             fetchMessages();

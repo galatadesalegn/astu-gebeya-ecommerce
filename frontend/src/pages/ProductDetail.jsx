@@ -83,6 +83,13 @@ const ProductDetail = () => {
             </AnimatePresence>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+                <button 
+                    onClick={() => navigate(-1)} 
+                    className="inline-flex items-center space-x-2 text-[var(--text-muted)] hover:text-orange-500 transition-colors group mb-8"
+                >
+                    <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="font-bold uppercase tracking-tight text-sm">Back</span>
+                </button>
 
                 <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-widest mb-12">
                     <Link to="/" className="hover:text-slate-900 transition">Store</Link>

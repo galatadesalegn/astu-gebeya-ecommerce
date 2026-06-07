@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
-import { Plus, Package, DollarSign, List, Image as ImageIcon, X, LayoutDashboard, BarChart3, Settings, Edit, Trash2, TrendingUp, Calendar, Zap, ShoppingCart, MessageSquare, Eye, Phone, MapPin, User as UserIcon } from 'lucide-react';
+import { Plus, Package, DollarSign, List, Image as ImageIcon, X, LayoutDashboard, BarChart3, Settings, Edit, Trash2, TrendingUp, Calendar, Zap, ShoppingCart, MessageSquare, Eye, Phone, MapPin, User as UserIcon, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
@@ -231,6 +231,15 @@ const SellerDashboard = () => {
                 type={modalConfig.type}
                 confirmText={modalConfig.confirmText}
             />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24">
+                <button 
+                    onClick={() => navigate(-1)} 
+                    className="inline-flex items-center space-x-2 text-[var(--text-muted)] hover:text-orange-500 transition-colors group"
+                >
+                    <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="font-bold uppercase tracking-tight text-sm">Back to Home</span>
+                </button>
+            </div>
             <AnimatePresence>
                 {toast && (
                     <motion.div

@@ -8,8 +8,10 @@ import {
     forgotPassword,
     verifyResetOTP,
     resetPassword,
+    updateUserProfile,
 } from '../controllers/authController.js';
 import { authLimiter, passwordResetLimiter, verificationResendLimiter } from '../middleware/rateLimiter.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -22,5 +24,8 @@ router.post('/refresh-token', refreshToken);
 router.post('/forgot-password', passwordResetLimiter, forgotPassword);
 router.post('/verify-reset-otp', passwordResetLimiter, verifyResetOTP);
 router.post('/reset-password', passwordResetLimiter, resetPassword);
+
+// Profile routes
+router.put('/profile', protect, updateUserProfile);
 
 export default router;
