@@ -1,67 +1,66 @@
 <div align="center">
 
-# 🛒 ShopFlow
+<img src="https://img.shields.io/badge/ASTU%20GEBEYA-E--Commerce%20Platform-orange?style=for-the-badge&logo=shopify&logoColor=white" alt="ASTU GEBEYA" />
 
-### Full-Stack E-Commerce Platform with Real-Time Admin Panel
+# 🛒 ASTU GEBEYA
 
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
-[![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![Socket.io](https://img.shields.io/badge/Socket.io-4.x-010101?style=flat-square&logo=socket.io&logoColor=white)](https://socket.io)
-[![MongoDB](https://img.shields.io/badge/MongoDB-7.x-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Deploy](https://img.shields.io/badge/live-online-brightgreen?style=flat-square)](https://astugebeya.vercel.app/)
+### A high-performance, unified marketplace built with the MERN stack
 
-<br/>
+[![React](https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express_5-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Socket.io](https://img.shields.io/badge/Socket.io-010101?style=flat-square&logo=socket.io&logoColor=white)](https://socket.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-> A production-ready e-commerce platform where buyers browse and purchase products, sellers manage listings, and admins monitor everything in real time via a Socket.io-powered dashboard.
+[![Storefront](https://img.shields.io/badge/🌐%20Storefront-Live-brightgreen?style=flat-square)](https://astugebeya.vercel.app)
+[![Admin Panel](https://img.shields.io/badge/🛠%20Admin%20Panel-Live-blue?style=flat-square)](https://your-admin-url.vercel.app)
+[![API](https://img.shields.io/badge/⚡%20Backend%20API-Live-orange?style=flat-square)](https://your-api-url.onrender.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](./LICENSE)
 
-<br/>
+<br />
 
-**[🌐 Live Demo](https://astugebeya.vercel.app/)** · **[🛠 Admin Panel](https://astugebeyaadminpanel.vercel.app/)** · **[🐛 Report Bug](https://github.com/galatadesalegn/shopflow/issues)**
+[![ASTU GEBEYA Preview](https://res.cloudinary.com/debw95rak/image/upload/w_900,q_auto,f_auto/Screenshot_20260607_114826_q997po)](https://astugebeya.vercel.app)
+
+> 🖱️ *Click the image to visit the live storefront*
 
 </div>
 
 ---
 
-## ✨ Features
+## 📖 Overview
 
-### 🛍 Storefront (Buyer)
-- Browse products with search, filter, and sort
-- Product detail pages with image gallery and reviews
-- Shopping cart with persistent state
-- Secure checkout with Stripe payment integration
-- Order history and tracking
-- User authentication (register / login / JWT)
-
-### 🏪 Seller Dashboard
-- List, edit, and remove products
-- Manage inventory and pricing
-- View sales analytics and order history
-- Upload product images
-
-### ⚡ Admin Panel (Real-Time)
-- Live order feed powered by **Socket.io**
-- Real-time inventory alerts when stock runs low
-- User management (ban, verify, role assignment)
-- Revenue and sales charts
-- Broadcast notifications to all connected users
+**ASTU GEBEYA** is a full-stack e-commerce marketplace platform that connects buyers and sellers in a unified, real-time environment. It features a secure authentication system with OTP verification, a live admin command center, and a polished, responsive storefront — all deployed and production-ready.
 
 ---
 
-## 🛠 Tech Stack
+## ✨ Features
+
+### 🛍️ Storefront
+- **Modern UI/UX** — Built with React 19, Tailwind CSS, and Framer Motion animations
+- **Unified Marketplace** — Browse and filter products with advanced search functionality
+- **Real-Time Chat** — Instant buyer-seller messaging powered by Socket.io
+- **Secure Authentication** — JWT-based login & registration with mandatory email OTP verification
+- **Seamless Navigation** — Consistent "Back to Home" flow from all auth screens
+
+### ⚡ Admin Command Center
+- **Real-Time Monitoring** — Live feed of flagged chats and pending product reviews
+- **Analytics Dashboard** — Revenue streams and sales performance charts
+- **Chat Moderation** — Monitor and flag inappropriate buyer-seller interactions
+- **Inventory Control** — Approve, reject, or remove marketplace listings instantly
+
+---
+
+## 🛠️ Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| **Frontend** | React 18, Vite, Tailwind CSS |
-| **Admin Panel** | React 18, Recharts, Tailwind CSS |
-| **Backend** | Node.js, Express |
-| **Real-Time** | Socket.io |
-| **Database** | MongoDB + Mongoose |
-| **Auth** | JWT + bcrypt |
-| **Payments** | Stripe |
-| **File Upload** | Multer + Cloudinary |
-| **Deployment** | Vercel (frontend) · Render (backend) |
+|---|---|
+| **Frontend** | React 19, Vite, Tailwind CSS, Framer Motion |
+| **Backend** | Node.js, Express 5, Socket.io |
+| **Database** | MongoDB Atlas |
+| **Storage** | Cloudinary (Image hosting) |
+| **Security** | Helmet, HPP, Rate Limiting, NoSQL Injection Protection |
+| **Deployment** | Vercel (Frontend), Render (Backend) |
 
 ---
 
@@ -69,202 +68,168 @@
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v18+
-- [MongoDB](https://mongodb.com/) (local or Atlas)
-- [Stripe account](https://stripe.com/) for payments
-- [Cloudinary account](https://cloudinary.com/) for image uploads
+- Node.js `v18+`
+- npm or yarn
+- MongoDB Atlas account
+- Cloudinary account
 
-### 1. Clone the repo
+### Local Setup
 
+**1. Clone the repository**
 ```bash
-git clone https://github.com/galatadesalegn/shopflow.git
-cd shopflow
+git clone https://github.com/your-username/astu-gebeya.git
+cd astu-gebeya
 ```
 
-### 2. Install dependencies
-
+**2. Install dependencies** (run in each directory)
 ```bash
+# Root
+npm install
+
 # Backend
-cd server && npm install
+cd backend && npm install
 
-# Frontend (storefront)
-cd ../client && npm install
+# Storefront
+cd ../frontend && npm install
 
-# Admin panel
-cd ../admin && npm install
+# Admin Panel
+cd ../admin-panel && npm install
 ```
 
-### 3. Configure environment variables
+**3. Configure environment variables**
 
-```bash
-cd server
-cp .env.example .env
-```
-
-Fill in your `.env`:
-
+Create a `.env` file in `/backend`:
 ```env
+NODE_ENV=development
 PORT=5000
-MONGO_URI=mongodb+srv://your_mongo_uri
-JWT_SECRET=your_super_secret_key
-JWT_EXPIRES_IN=7d
-
-STRIPE_SECRET_KEY=sk_test_your_stripe_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
-
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+FRONTEND_URL=http://localhost:5173
+ADMIN_URL=http://localhost:5174
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-
-CLIENT_URL=http://localhost:5173
-ADMIN_URL=http://localhost:5174
 ```
 
-### 4. Start all servers
+Create a `.env` file in both `/frontend` and `/admin-panel`:
+```env
+VITE_BACKEND_URL=http://localhost:5000
+```
 
+**4. Start the development servers**
 ```bash
-# Terminal 1 — Backend + Socket.io (http://localhost:5000)
-cd server && npm run dev
+# From root (if concurrently is configured)
+npm run dev
 
-# Terminal 2 — Storefront (http://localhost:5173)
-cd client && npm run dev
-
-# Terminal 3 — Admin panel (http://localhost:5174)
-cd admin && npm run dev
+# Or run each separately
+cd backend && npm run dev
+cd frontend && npm run dev
+cd admin-panel && npm run dev
 ```
+
+---
+
+## ☁️ Deployment
+
+### Backend → Render
+
+Set the following environment variables in your **Render Dashboard**:
+
+```env
+NODE_ENV=production
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+TRUST_PROXY=true
+FRONTEND_URL=https://your-storefront-url.vercel.app
+ADMIN_URL=https://your-admin-url.vercel.app
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+```
+
+### Frontend & Admin → Vercel
+
+Set the following in each project's **Vercel Project Settings → Environment Variables**:
+
+```env
+VITE_BACKEND_URL=https://your-backend-url.onrender.com
+```
+
+---
+
+## 🔒 Security
+
+- **CORS**: Restricted to specific Vercel deployment URLs only
+- **Headers**: Hardened via `helmet` middleware; stack traces disabled in production
+- **Rate Limiting**: API endpoints protected against abuse
+- **NoSQL Injection**: Input sanitization on all database queries
+- **Sockets**: Configured with secure credentials and production-only origin policy
 
 ---
 
 ## 📁 Project Structure
 
 ```
-shopflow/
-├── client/                        # Buyer-facing React storefront
+astu-gebeya-ecommerce-platform/
+├── admin-panel/              # React Admin Dashboard (Vercel)
+│   ├── public/               # Static assets (logos, images)
 │   ├── src/
-│   │   ├── components/            # Navbar, ProductCard, Cart, etc.
-│   │   ├── pages/                 # Home, Product, Checkout, Orders
-│   │   ├── context/               # CartContext, AuthContext
-│   │   ├── hooks/                 # useCart, useAuth, useFetch
-│   │   └── App.jsx
-│   └── vite.config.js
+│   │   ├── components/       # Reusable UI (Sidebar, Navbar, Modals)
+│   │   ├── context/          # Admin & Theme state management
+│   │   ├── pages/            # Dashboard, Users, Products, Chats, Reports
+│   │   ├── services/         # API configuration (Axios)
+│   │   └── App.jsx           # Protected Admin routing
+│   ├── vercel.json           # Vercel deployment config
+│   └── vite.config.js        # Vite configuration
 │
-├── admin/                         # Real-time admin panel
+├── backend/                  # Node.js Express API (Render)
+│   ├── config/               # Database (MongoDB) connection
+│   ├── controllers/          # Business logic (Auth, Products, Orders, Chat)
+│   ├── middleware/           # Security, Auth, Rate Limiting, Error Handling
+│   ├── models/               # Mongoose schemas (User, Product, Message, Order)
+│   ├── routes/               # Express API endpoints
+│   ├── utils/                # Admin seeder, Email helpers (Nodemailer)
+│   ├── server.js             # Entry point & Socket.io setup
+│   └── .env                  # Production environment variables
+│
+├── frontend/                 # React Storefront (Vercel)
+│   ├── public/               # Hero images and marketplace assets
 │   ├── src/
-│   │   ├── components/            # Sidebar, StatsCard, OrderFeed
-│   │   ├── pages/                 # Dashboard, Products, Users, Orders
-│   │   ├── socket/                # Socket.io client setup
-│   │   └── App.jsx
-│   └── vite.config.js
+│   │   ├── assets/           # React SVGs and local images
+│   │   ├── components/       # Landing, Navbar, Footer, UI Modals
+│   │   ├── context/          # Auth, Cart, and Theme state
+│   │   ├── pages/            # Home, Collection, Product Details, Chat, Checkout
+│   │   ├── services/         # API configuration (Axios)
+│   │   └── App.jsx           # Storefront routing
+│   ├── vercel.json           # Vercel deployment config
+│   └── vite.config.js        # Vite configuration (Tailwind setup)
 │
-├── server/                        # Node.js + Express + Socket.io
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── productController.js
-│   │   ├── orderController.js
-│   │   └── userController.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Product.js
-│   │   └── Order.js
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── products.js
-│   │   ├── orders.js
-│   │   └── users.js
-│   ├── socket/
-│   │   └── index.js               # Socket.io event handlers
-│   ├── middleware/
-│   │   ├── auth.js                # JWT verification
-│   │   └── isAdmin.js
-│   ├── .env.example
-│   └── index.js
-│
-└── README.md
+└── README.md                 # Project documentation
 ```
 
 ---
 
-## 🔌 Real-Time Events (Socket.io)
+## 🤝 Contributing
 
-| Event | Direction | Description |
-|-------|-----------|-------------|
-| `order:new` | Server → Admin | New order placed by a buyer |
-| `order:updated` | Server → Admin | Order status changed |
-| `inventory:low` | Server → Admin | Product stock below threshold |
-| `user:joined` | Server → Admin | New user registered |
-| `admin:broadcast` | Admin → All clients | Admin sends site-wide notification |
+Contributions are welcome! Please open an issue first to discuss what you'd like to change.
 
----
-
-## 🔐 API Endpoints
-
-### Auth
-```
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/auth/me
-```
-
-### Products
-```
-GET    /api/products              # All products (with filters)
-GET    /api/products/:id          # Single product
-POST   /api/products              # Create (seller/admin)
-PUT    /api/products/:id          # Update (seller/admin)
-DELETE /api/products/:id          # Delete (seller/admin)
-```
-
-### Orders
-```
-POST   /api/orders                # Place order (buyer)
-GET    /api/orders/my             # My orders (buyer)
-GET    /api/orders                # All orders (admin)
-PUT    /api/orders/:id/status     # Update status (admin)
-```
-
-### Users
-```
-GET    /api/users                 # All users (admin)
-PUT    /api/users/:id/role        # Assign role (admin)
-DELETE /api/users/:id             # Delete user (admin)
-```
-
----
-
-## 🌍 Deployment
-
-### Frontend & Admin → Vercel
-
-```bash
-# Storefront
-cd client && npm run build
-
-# Admin panel
-cd admin && npm run build
-```
-
-Connect both to Vercel as separate projects, or deploy the `/dist` folders manually.
-
-### Backend → Render
-
-1. Push repo to GitHub
-2. Create a **Web Service** on [Render](https://render.com), root: `server/`
-3. Add all environment variables from `.env` in Render's dashboard
-4. Set start command: `node index.js`
-5. Copy the Render URL → update `REACT_APP_API_URL` in your frontend `.env`
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-MIT — free to use, modify, and distribute. See [`LICENSE`](LICENSE).
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
 
 ---
 
 <div align="center">
 
-Built by **Galata Desalegn** — Addis Ababa, Ethiopia
-
-⭐ Star this repo if you found it useful!
+Built with ❤️ using the MERN Stack
 
 </div>
